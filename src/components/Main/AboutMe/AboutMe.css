@@ -1,0 +1,70 @@
+.aboutMe {
+  max-width: 1280px;
+  padding: 110px 70px 101px;
+  background: rgba(255, 255, 255, 1);
+}
+.aboutMe__header {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 22px;
+  line-height: 27px;
+  letter-spacing: -0.04em;
+  color: #000000;
+}
+
+.aboutMe__block {
+  position: relative;
+}
+.aboutMe__name {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 50px;
+  line-height: 58px;
+  letter-spacing: -0.04em;
+  color: rgba(0, 0, 0, 1);
+  margin: 0;
+  padding-top: 66px;
+}
+.aboutMe__hobby {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 20px;
+  color: #111111;
+  mix-blend-mode: normal;
+  margin: 0;
+  padding-top: 18px;
+}
+.aboutMe__description {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+  color: #000000;
+  mix-blend-mode: normal;
+  margin: 0;
+  padding: 26px 0 99px;
+  max-width: 600px;
+}
+.aboutMe__foto {
+  position: absolute;
+  left: 73.44%;
+  right: 5.47%;
+  top: 21.04%;
+  bottom: 48.66%;
+  border-radius: 10px;
+  width: 270px;
+  height: 327px;
+}
+.aboutMe__link {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  color: #000000;
+  text-decoration: none;
+  margin: 0;
+  list-style-type: none;
+  cursor: pointer;
+  padding-right: 20px;
+}

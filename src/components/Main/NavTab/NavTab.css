@@ -1,0 +1,24 @@
+.navtab__group {
+  max-width: 1280px;
+  background: rgba(0, 0, 0, 1);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+.navtab__links {
+  display: flex;
+  margin: 0;
+  padding: 24px 0;
+  gap: 40px;
+}
+.navtab__link {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 16px;
+  text-decoration-line: underline;
+  color: rgba(255, 255, 255, 1);
+  list-style-type: none;
+  cursor: pointer;
+}

@@ -1,0 +1,14 @@
+.main {
+  display: flex;
+  flex-direction: column;
+}
+.main-header__project {
+  display: flex;
+  flex-direction: column;
+}
+
+.main-title__project {
+  padding-bottom: 23px;
+  margin: 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 1);
+}

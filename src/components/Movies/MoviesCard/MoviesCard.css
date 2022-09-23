@@ -1,0 +1,63 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  width: 270px;
+}
+.card__image {
+  width: 270px;
+  height: 151px;
+  padding-bottom: 14px;
+}
+.card__info {
+  display: flex;
+  flex-direction: row;
+  padding-bottom: 29px;
+  border-bottom: 1px solid rgba(232, 232, 232, 1);
+  align-items: center;
+  justify-content: space-between;
+}
+.card__title {
+  margin: 0;
+  padding: 0;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 16px;
+  color: #000000;
+}
+.card__block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: rgba(245, 245, 245, 1);
+  cursor: pointer;
+}
+.card__block:hover {
+  background: rgba(204, 204, 204, 1);
+  transition: all 0.5s linear;
+}
+.card__like {
+  width: 10px;
+  height: 8.5px;
+  background: transparent url("../../../images/icon/icon-like.svg") 50%;
+  border: none;
+  cursor: pointer;
+  background-repeat: no-repeat;
+  transition: all 0.2s ease;
+  outline: none;
+}
+.card__counter {
+  margin: 0;
+  padding-top: 6px;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 11px;
+  line-height: 13px;
+  color: rgba(160, 160, 160, 1);
+}

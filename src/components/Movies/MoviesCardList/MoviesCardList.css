@@ -1,0 +1,36 @@
+.cardList {
+  max-width: 1140px;
+  background: rgba(255, 255, 255, 1);
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 70px 70px 10px;
+  gap: 38px 20px;
+  position: relative;
+}
+.cardList__container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+  grid-template-rows: repeat(4, 1fr);
+}
+.cardList__block {
+  max-width: 1140px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 50px 70px 80px;
+}
+.cardList__plus {
+  max-width: 1140px;
+  background: rgba(249, 249, 249, 1);
+  width: 89vw;
+  border: none;
+  margin: 0;
+  padding: 11px 0 8px;
+  cursor: pointer;
+}
+.cardList__plus:hover {
+  background: rgba(204, 204, 204, 1);
+  transition: all 0.5s linear;
+}
