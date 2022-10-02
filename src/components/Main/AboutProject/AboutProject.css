@@ -2,6 +2,7 @@
   background: rgba(255, 255, 255, 1);
   padding: 110px 70px;
 }
+
 .aboutProject__title {
   font-style: normal;
   font-weight: 400;
@@ -10,12 +11,13 @@
   letter-spacing: -0.04em;
   color: #000000;
 }
+
 .aboutProject__block {
   display: flex;
   flex-direction: row;
+  gap: 8px;
 }
-.aboutProject__main-left {
-}
+
 .aboutProject__title-left {
   font-style: normal;
   font-weight: 400;
@@ -26,6 +28,7 @@
   margin: 0;
   padding: 70px 0 26px;
 }
+
 .aboutProject__description-left {
   font-style: normal;
   font-weight: 400;
@@ -34,8 +37,7 @@
   color: #000000;
   margin: 0;
 }
-.aboutProject__main-right {
-}
+
 .aboutProject__title-right {
   font-style: normal;
   font-weight: 400;
@@ -46,6 +48,7 @@
   margin: 0;
   padding: 70px 0 26px;
 }
+
 .aboutProject__description-right {
   font-style: normal;
   font-weight: 400;
@@ -54,16 +57,19 @@
   color: #000000;
   margin: 0;
 }
+
 .aboutProject__progress {
   display: grid;
   grid-template-rows: 36px;
   grid-template-columns: 221px 1fr;
   padding-top: 110px;
 }
+
 .aboutProject__back {
   display: flex;
   flex-direction: column;
 }
+
 .aboutProject__title-back {
   max-width: 228px;
   font-style: normal;
@@ -75,6 +81,7 @@
   background-color: rgba(43, 224, 128, 1);
   padding: 9px 0;
 }
+
 .aboutProject__title-back_span {
   font-style: normal;
   font-weight: 500;
@@ -84,10 +91,12 @@
   color: rgba(160, 160, 160, 1);
   padding-top: 14px;
 }
+
 .aboutProject__front {
   display: flex;
   flex-direction: column;
 }
+
 .aboutProject__title-front {
   max-width: 912px;
   font-style: normal;
@@ -99,6 +108,7 @@
   background-color: rgba(242, 242, 242, 1);
   padding: 9px 0;
 }
+
 .aboutProject__title-front_span {
   font-style: normal;
   font-weight: 500;
@@ -107,4 +117,40 @@
   text-align: center;
   color: rgba(160, 160, 160, 1);
   padding-top: 14px;
+}
+
+@media screen and (min-width: 741px) and (max-width:950px) {
+  .aboutProject {
+    padding: 90px 50px;
+  }
+
+  .aboutProject__progress {
+    padding-top: 93px;
+  }
+}
+
+@media screen and (min-width: 320px) and (max-width:740px) {
+  .aboutProject {
+    padding: 70px 18px;
+  }
+
+  .aboutProject__block {
+    flex-direction: column;
+  }
+
+  .aboutProject__title-left {
+    padding: 60px 0 16px;
+  }
+
+  .aboutProject__title-right {
+    padding: 60px 0 16px;
+  }
+
+  .aboutProject__progress {
+    padding-top: 60px;
+  }
+
+  .aboutProject__progress {
+    grid-template-columns: 100px 1fr;
+  }
 }

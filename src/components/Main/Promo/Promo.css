@@ -3,7 +3,7 @@
   align-items: center;
   justify-content: center;
   max-width: 1280px;
-  padding: 184px 275px 224px;
+  padding: 184px 0 224px;
 }
 
 .promo__title {
@@ -18,7 +18,19 @@
   margin: 0;
   padding: 0;
 }
+
 .promo__image {
   position: absolute;
   size: 320px;
+}
+
+@media screen and (min-width: 320px) and (max-width:425px) {
+  .promo {
+    padding: 142px 0 180px;
+  }
+
+  .promo__title {
+    font-size: 31px;
+    line-height: 39px;
+  }
 }

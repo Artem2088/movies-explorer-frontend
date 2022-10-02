@@ -1,12 +1,12 @@
 import React from "react";
 import MoviesCard from "../MoviesCard/MoviesCard";
-import Preloader from "../Preloader/Preloader";
+// import Preloader from "../Preloader/Preloader";
 import "./MoviesCardList.css";
 
 const MoviesCardList = () => {
   return (
-    <ul className='cardList'>
-      <div className='cardList__container'>
+    <section className='cardList'>
+      <ul className='cardList__container'>
         <MoviesCard />
         <MoviesCard />
         <MoviesCard />
@@ -24,11 +24,11 @@ const MoviesCardList = () => {
         <MoviesCard />
         <MoviesCard />
         {/* <Preloader/>  работает-включить после второго ревью*/}
-      </div>
+      </ul>
       <div className='cardList__block'>
         <button className='cardList__plus'>Ещё</button>
       </div>
-    </ul>
+    </section>
   );
 };
 

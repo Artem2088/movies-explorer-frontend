@@ -6,12 +6,14 @@
   align-items: center;
   justify-content: center;
 }
+
 .navtab__links {
   display: flex;
   margin: 0;
   padding: 24px 0;
   gap: 40px;
 }
+
 .navtab__link {
   font-style: normal;
   font-weight: 500;
@@ -21,4 +23,10 @@
   color: rgba(255, 255, 255, 1);
   list-style-type: none;
   cursor: pointer;
+}
+
+@media screen and (min-width: 320px) and (max-width:425px) {
+  .navtab__links {
+    gap: 24px
+  }
 }

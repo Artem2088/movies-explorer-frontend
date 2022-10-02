@@ -6,6 +6,14 @@
   padding: 80px 70px 94px;
   border-bottom: 1px solid rgba(232, 232, 232, 1);
 }
+@media screen and (max-width: 1023px) {
+  .searchForm {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 30px;
+  }
+}
 .searchForm__field {
   position: relative;
 }
@@ -17,6 +25,11 @@
   border: 2px solid rgba(232, 232, 232, 1);
   padding: 0;
   margin: 0;
+}
+@media screen and (max-width: 796px) {
+  .searchForm__input {
+    width: 92vw;
+  }
 }
 .searchForm__input::placeholder {
   padding-left: 22px;

@@ -1,7 +1,17 @@
 .header-movies {
   background: rgba(255, 255, 255, 1);
 }
-.header__link-movies {
+
+.header-movies__logo {
+  background-image: url("../../images/icon/logo-circle.svg");
+}
+
+.header-movies__container {
+  display: flex;
+  flex-direction: row;
+}
+
+.header-movies__link {
   font-style: normal;
   font-weight: 500;
   font-size: 14px;
@@ -14,26 +24,53 @@
   text-align: right;
   text-decoration: none;
 }
-.header__link-movies:hover {
+
+.header-movies__link:hover {
   color: rgba(204, 204, 204, 1);
   transition: all 0.3s linear;
 }
-.header__link-movies:nth-child(2n) {
+
+.header-movies__link:nth-child(2n) {
   padding-right: 50px;
 }
-.header__button-movies {
+
+.header-movies__button {
   background: none;
   border-radius: 50px;
   border: 2px solid rgba(170, 170, 170, 0.2);
-  margin: 0;
   padding: 8px 12px;
   cursor: pointer;
 }
-.header__button-movies:hover {
+
+.header-movies__button:hover {
   background: rgba(204, 204, 204, 1);
   transition: all 0.5s linear;
 }
-.header__button-movies_icon {
+
+.header-movies__button_icon {
   padding-right: 7px;
   color: rgba(0, 0, 0, 1);
+}
+
+.header-movies__btn {
+  display: none;
+  z-index: 7;
+}
+
+@media screen and (max-width: 800px) {
+  .header-movies__container {
+    display: none;
+  }
+
+  .header-movies__btn {
+    display: block;
+  }
+
+}
+
+@media screen and (max-width: 320px) {
+  .header-movies__logo {
+    display: block;
+  }
+
 }

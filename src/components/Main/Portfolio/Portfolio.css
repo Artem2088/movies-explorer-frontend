@@ -3,6 +3,7 @@
   background: rgba(255, 255, 255, 1);
   padding: 0 70px 125px;
 }
+
 .portfolio__title {
   font-style: normal;
   font-weight: 400;
@@ -13,6 +14,7 @@
   margin: 0;
   padding-bottom: 50px;
 }
+
 .portfolio__site {
   font-style: normal;
   font-weight: 400;
@@ -27,17 +29,43 @@
   align-items: center;
   border-bottom: 1px solid rgba(230, 230, 230, 1);
 }
+
 .portfolio__link {
   display: flex;
 }
+
 .portfolio_arrow {
   width: 29px;
   height: 50px;
 }
+
 .portfolio__site_adaptiv {
   padding-top: 20px;
 }
+
 .portfolio__site_spa {
   padding-top: 20px;
   border: none;
+}
+
+@media screen and (max-width: 800px) {
+  .portfolio {
+    padding: 90px 50px;
+  }
+}
+
+@media screen and (min-width: 320px) and (max-width:799px) {
+  .portfolio {
+    padding: 0 14px 70px;
+  }
+
+  .portfolio__site {
+    font-size: 18px;
+    line-height: 28px;
+  }
+
+  .portfolio_arrow {
+    width: 18px;
+    height: 28px;
+  }
 }

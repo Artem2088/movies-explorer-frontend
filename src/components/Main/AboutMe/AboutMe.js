@@ -1,6 +1,5 @@
 import React from "react";
 import "./AboutMe.css";
-import meFoto from "../../../images/image/697522461.jpeg";
 
 const AboutMe = () => {
   return (
@@ -12,19 +11,23 @@ const AboutMe = () => {
         <h3 className='aboutMe__name'>Артем</h3>
         <p className='aboutMe__hobby'>Фронтенд-разработчик, 34 лет</p>
         <p className='aboutMe__description'>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo id illo
-          alias ratione pariatur nobis doloribus ipsa enim incidunt vero! Quod
-          rem magni ad soluta! Similique harum ipsa adipisci impedit?
+          Живу в Санкт-Петербурге. Женат, есть дочь. Из увлечений люблю технику
+          и все, что с ней связано. С не давних пор, а именно с сентября 2021
+          года решил изменить свой образ деятельности и пошел учиться на
+          Веб-разработчика в Яндекс-Практикум. На данный момент работаю, но в
+          скором времени планирую уйти с основной работы и начать зарабатывать
+          на жизнь тем, чем нравится. А именно, созданием и поддержкой сайтов и
+          приложений.
         </p>
-        <img src={meFoto} alt='Фото студента' className='aboutMe__foto' />
+        <div className='aboutMe__foto'></div>
       </div>
-      <a href='#' className='aboutMe__link'>
+      <a href='https://github.com/Artem2088' className='aboutMe__link'>
         Github
       </a>
-      <a href='#' className='aboutMe__link'>
+      <a href='https://telegram.org/' className='aboutMe__link'>
         Telegram
       </a>
-      <a href='#' className='aboutMe__link'>
+      <a href='https://vk.com/' className='aboutMe__link'>
         Vkontakte
       </a>
     </div>

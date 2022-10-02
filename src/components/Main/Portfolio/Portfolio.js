@@ -8,19 +8,28 @@ const Portfolio = () => {
       <h3 className='portfolio__title '>Портфолио</h3>
       <div className='portfolio__site'>
         Статичный сайт
-        <a href='#' className='portfolio__link'>
+        <a
+          href='https://github.com/Artem2088/how-to-learn'
+          className='portfolio__link'
+        >
           <img src={arrow} alt='стрелка' className='portfolio_arrow' />
         </a>
       </div>
       <div className='portfolio__site portfolio__site_adaptiv'>
         Адаптивный сайт
-        <a href='#' className='portfolio__link portfolio__link_adaptiv'>
+        <a
+          href='https://artem2088.github.io/russian-travel/'
+          className='portfolio__link portfolio__link_adaptiv'
+        >
           <img src={arrow} alt='стрелка' className='portfolio_arrow' />
         </a>
       </div>
       <div className='portfolio__site portfolio__site_spa'>
         Одностраничное приложение
-        <a href='#' className='portfolio__link portfolio__link_spa'>
+        <a
+          href='https://artem2088.github.io/mesto/'
+          className='portfolio__link portfolio__link_spa'
+        >
           <img
             src={arrow}
             alt='стрелка'

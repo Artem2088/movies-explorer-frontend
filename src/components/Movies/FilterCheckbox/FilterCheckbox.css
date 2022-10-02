@@ -5,6 +5,11 @@
   align-items: center;
   justify-content: center;
 }
+@media screen and (max-width: 1023px) {
+  .filterCheckbox {
+    padding-top: 38px;
+  }
+}
 .checkBox__title {
   max-width: 117px;
   margin: 0;
@@ -15,6 +20,12 @@
   line-height: 18px;
   color: rgba(0, 0, 0, 1);
 }
+@media screen and (max-width: 1070px) {
+  .checkBox__title {
+    padding: 0 14px 0 20px;
+  }
+}
+
 input[type="checkbox"] {
   position: relative;
   width: 36px;
