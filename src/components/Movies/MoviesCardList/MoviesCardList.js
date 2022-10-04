@@ -14,15 +14,6 @@ const MoviesCardList = () => {
         <MoviesCard />
         <MoviesCard />
         <MoviesCard />
-        <MoviesCard />
-        <MoviesCard />
-        <MoviesCard />
-        <MoviesCard />
-        <MoviesCard />
-        <MoviesCard />
-        <MoviesCard />
-        <MoviesCard />
-        <MoviesCard />
         {/* <Preloader/>  работает-включить после второго ревью*/}
       </ul>
       <div className='cardList__block'>

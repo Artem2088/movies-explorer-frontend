@@ -48,11 +48,8 @@
 }
 
 .login__input {
-  background: rgba(249, 249, 249, 1);
-  border-radius: 8px;
   margin: 0;
   padding: 15px;
-  border: none;
 }
 
 .login__error_email {
@@ -70,7 +67,7 @@
 }
 
 .login__button {
-  background: #3456f3;
+  background: rgba(255, 104, 56, 1);
   padding: 15px 24px;
   color: rgba(255, 255, 255, 1);
   max-width: 396px;
@@ -99,7 +96,7 @@
   font-size: 14px;
   line-height: 17px;
   text-align: center;
-  color: rgba(52, 86, 243, 1);
+  color: rgba(255, 104, 56, 1);
   padding-left: 6px;
   text-decoration: none;
 }

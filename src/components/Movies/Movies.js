@@ -4,6 +4,7 @@ import MoviesHeader from "../MoviesHeader/MoviesHeader";
 import Footer from "../Footer/Footer";
 import SearchForm from "./SearchForm/SearchForm";
 import MoviesCardList from "./MoviesCardList/MoviesCardList";
+// import Modal from "../Modal/Modal";
 
 const Movies = () => {
   return (
@@ -13,6 +14,7 @@ const Movies = () => {
         <SearchForm />
         <MoviesCardList />
         <Footer />
+        {/* <Modal /> */}
       </div>
     </>
   );

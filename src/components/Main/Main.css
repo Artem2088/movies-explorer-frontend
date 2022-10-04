@@ -1,7 +1,9 @@
 .main {
   display: flex;
   flex-direction: column;
+  background-color: rgba(70, 93, 255, 1);
 }
+
 .main-header__project {
   display: flex;
   flex-direction: column;

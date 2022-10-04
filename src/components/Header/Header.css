@@ -13,10 +13,7 @@
   height: 38px;
   cursor: pointer;
   border: none;
-}
-
-.header__logo {
-  background-image: url("../../images/icon/logo.svg");
+  background-image: url("../../images/icon/logo-circle.svg");
 }
 
 .header__container {
@@ -74,9 +71,6 @@
     padding: 21px 30px;
   }
 
-  .header__logo {
-    background-image: url("../../images/icon/logo-circle.svg");
-  }
 }
 
 @media screen and (min-width: 320px) and (max-width:799px) {

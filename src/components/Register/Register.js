@@ -1,6 +1,6 @@
 import React from "react";
+// import Modal from "../Modal/Modal";
 import "./Register.css";
-import movieLogo from "../../images/icon/logo-circle.svg";
 import { Link } from "react-router-dom";
 
 const Register = () => {
@@ -8,7 +8,7 @@ const Register = () => {
     <div className='register'>
       <div className='register__container'>
         <Link to={"/"}>
-          <img src={movieLogo} alt='логотип' className='header__logo-movies' />
+          <div className='logo'></div>
         </Link>
         <h2 className='register__title'>Добро пожаловать!</h2>
       </div>
@@ -70,6 +70,7 @@ const Register = () => {
           Войти
         </Link>
       </p>
+      {/* <Modal /> */}
     </div>
   );
 };

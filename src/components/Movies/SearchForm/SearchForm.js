@@ -1,12 +1,14 @@
 import React from "react";
 import "./SearchForm.css";
 import search from "../../../images/icon/icon-search.svg";
+import searchInput from "../../../images/icon/icon-search-input.svg";
 import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
 
 const SearchForm = () => {
   return (
     <div className='searchForm'>
       <div className='searchForm__field'>
+        <img src={searchInput} alt='поиск' className='searchForm__inputIcon' />
         <input
           type='text'
           name='film'
@@ -17,8 +19,8 @@ const SearchForm = () => {
         <button className='searchForm__block'>
           <img src={search} alt='поиск' className='searchForm__icon' />
         </button>
+        <FilterCheckbox />
       </div>
-      <FilterCheckbox />
     </div>
   );
 };

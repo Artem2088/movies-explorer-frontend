@@ -2,7 +2,6 @@ import React from "react";
 import Footer from "../Footer/Footer";
 import Header from "../Header/Header";
 import Promo from "./Promo/Promo";
-import NavTab from "./NavTab/NavTab";
 import "./Main.css";
 import AboutProject from "./AboutProject/AboutProject";
 import Techs from "./Techs/Techs";
@@ -15,7 +14,6 @@ const Main = () => {
       <main className='main'>
         <Header />
         <Promo />
-        <NavTab />
         <AboutProject />
         <Techs />
         <AboutMe />

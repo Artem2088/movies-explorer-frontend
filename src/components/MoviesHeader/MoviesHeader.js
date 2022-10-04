@@ -12,7 +12,7 @@ const MoviesHeader = () => {
   return (
     <header className='header header-movies'>
       <Link to={"/"}>
-        <div className='logo header-movies__logo'></div>
+        <div className='logo'></div>
       </Link>
       <div className='header-movies__container'>
         <Link to={"/movies"} className='header-movies__link'>

@@ -1,24 +1,24 @@
 .card {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
   margin: 0 auto;
   padding: 0;
-  width: 270px;
+  width: 100%;
+  background: rgba(249, 249, 249, 1);
 }
 
 .card__image {
-  width: 270px;
-  height: 151px;
-  padding-bottom: 14px;
+  width: 220px;
+  height: auto;
+  padding: 6px;
 }
 
 .card__info {
   display: flex;
-  flex-direction: row;
-  padding-bottom: 29px;
-  border-bottom: 1px solid rgba(232, 232, 232, 1);
-  align-items: center;
-  justify-content: space-between;
+  flex-direction: column;
+  padding: 22px 0 22px 22px;
 }
 
 .card__title {
@@ -26,8 +26,8 @@
   padding: 0;
   font-style: normal;
   font-weight: 500;
-  font-size: 13px;
-  line-height: 16px;
+  font-size: 18px;
+  line-height: 22px;
   color: #000000;
 }
 
@@ -39,7 +39,6 @@
   width: 24px;
   height: 24px;
   border-radius: 50%;
-  background: rgba(245, 245, 245, 1);
   cursor: pointer;
 }
 
@@ -49,19 +48,25 @@
 }
 
 .card__like {
-  width: 10px;
-  height: 8.5px;
-  background: transparent url("../../../images/icon/icon-like.svg") 50%;
+  width: 14px;
+  height: 10px;
+}
+
+.card__disLike {
+  display: none;
+}
+
+.card__button {
   border: none;
+  background: none;
+  padding: 0;
   cursor: pointer;
-  background-repeat: no-repeat;
-  transition: all 0.2s ease;
-  outline: none;
+  margin: 16px;
 }
 
 .card__counter {
   margin: 0;
-  padding-top: 6px;
+  padding: 13px 0 30px;
   font-style: normal;
   font-weight: 400;
   font-size: 11px;
@@ -69,30 +74,35 @@
   color: rgba(160, 160, 160, 1);
 }
 
-@media screen and (min-width: 500px) and (max-width:800px) {
+@media screen and (min-width: 320px) and (max-width:500px) {
   .card {
-    width: 339px;
-  }
-
-  .card__image {
-    width: 339px;
-    height: auto;
-  }
-}
-
-@media screen and (min-width: 390px) and (max-width:499px) {
-  .card {
+    flex-direction: column-reverse;
     width: 300px;
+    align-items: flex-start;
+  }
+
+  .card__title {
+    font-size: 12px;
+    line-height: 15px;
   }
 
   .card__image {
     width: 300px;
-    height: auto;
+    padding: 0;
   }
-}
 
-@media screen and (min-width: 320px) and (max-width:389px) {
-  .card {
-    margin: 0;
+  .card__info {
+    padding: 14px 0 14px 12px;
+    position: relative;
+  }
+
+  .card__counter {
+    padding: 8px 0 0;
+  }
+
+  .card__block {
+    position: absolute;
+    top: 16%;
+    left: 209%;
   }
 }

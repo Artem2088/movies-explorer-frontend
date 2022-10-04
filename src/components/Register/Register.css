@@ -62,11 +62,15 @@
 
 .input {
   border: none;
-  border-radius: 8px;
+  outline: none;
+  border-bottom: 1px solid rgba(232, 232, 232, 1);
+}
+
+.input:focus {
+  border-bottom: 1px solid rgba(255, 104, 56, 1);
 }
 
 .register__input {
-  background: rgba(249, 249, 249, 1);
   margin: 0;
   padding: 15px;
 }
@@ -102,7 +106,7 @@
 }
 
 .register__button {
-  background: #3456f3;
+  background: rgba(255, 104, 56, 1);
   padding: 15px 124px;
   color: rgba(255, 255, 255, 1);
   max-width: 396px;
@@ -131,7 +135,7 @@
   font-size: 14px;
   line-height: 17px;
   text-align: center;
-  color: rgba(52, 86, 243, 1);
+  color: rgba(255, 104, 56, 1);
   padding-left: 6px;
   text-decoration: none;
 }

@@ -1,4 +1,5 @@
 import React from "react";
+// import Modal from "../Modal/Modal";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import MoviesHeader from "../MoviesHeader/MoviesHeader";
@@ -10,9 +11,6 @@ const Profile = () => {
   return (
     <div className='profile'>
       <MoviesHeader />
-      <Link to={"/"}>
-        <div className='logo profile__logo'></div>
-      </Link>
       <div className='profile__container'>
         <h2 className='profile__title'>Привет, Артем!</h2>
         <form className='form'>
@@ -73,6 +71,7 @@ const Profile = () => {
           </button>
         </div>
       </div>
+      {/* <Modal /> */}
     </div>
   );
 };

@@ -5,7 +5,7 @@ import iconLogo from "../../images/icon/button-icon-main.svg";
 
 const Navigation = () => {
   return (
-    <div className='navigation avtiv'>
+    <div className='navigation'>
       <div className='navigation-links__container '>
         <NavLink to={"/"} className='navigation__link' end>
           Главная
