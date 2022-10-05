@@ -4,12 +4,15 @@ import search from "../../../images/icon/icon-search.svg";
 import searchInput from "../../../images/icon/icon-search-input.svg";
 import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
 
-const SearchForm = () => {
+const SearchForm = ({ searchValue, onChangeSearchValue }) => {
+  console.log(searchValue);
   return (
     <div className='searchForm'>
       <div className='searchForm__field'>
         <img src={searchInput} alt='поиск' className='searchForm__inputIcon' />
         <input
+          value={searchValue}
+          onChange={onChangeSearchValue}
           type='text'
           name='film'
           id='film'

@@ -6,13 +6,16 @@ import SearchForm from "./SearchForm/SearchForm";
 import MoviesCardList from "./MoviesCardList/MoviesCardList";
 // import Modal from "../Modal/Modal";
 
-const Movies = () => {
+const Movies = ({ items, isLoading, onChangeSearchValue, searchValue }) => {
   return (
     <>
       <div className='movies'>
         <MoviesHeader />
-        <SearchForm />
-        <MoviesCardList />
+        <SearchForm
+          searchValue={searchValue}
+          onChangeSearchValue={onChangeSearchValue}
+        />
+        <MoviesCardList items={items} isLoading={isLoading} />
         <Footer />
         {/* <Modal /> */}
       </div>

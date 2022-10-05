@@ -7,7 +7,7 @@ const Login = () => {
   return (
     <div className='login'>
       <div className='login__container'>
-        <Link to={"/"}>
+        <Link to={"/"} className='login__link'>
           <div className='logo'></div>
         </Link>
         <h2 className='register__title login__title'>Рады видеть!</h2>
