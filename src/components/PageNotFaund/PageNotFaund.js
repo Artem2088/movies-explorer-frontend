@@ -4,7 +4,7 @@ import "./PageNotFaund.css";
 
 const PageNotFaund = () => {
   return (
-    <div className='pageNotFaund'>
+    <section className='pageNotFaund'>
       <div className='pageNotFaund__container'>
         <span className='pageNotFaund__span'>404</span>
         <p className='pageNotFaund__title'>Страница не найдена</p>
@@ -12,7 +12,7 @@ const PageNotFaund = () => {
       <Link to={"/"} className='pageNotFaund__back'>
         Назад
       </Link>
-    </div>
+    </section>
   );
 };
 

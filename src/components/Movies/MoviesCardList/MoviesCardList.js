@@ -3,15 +3,15 @@ import MoviesCard from "../MoviesCard/MoviesCard";
 import Preloader from "../Preloader/Preloader";
 import "./MoviesCardList.css";
 
-const MoviesCardList = ({ items, isLoading }) => {
+const MoviesCardList = ({ items, loading }) => {
   return (
     <section className='cardList'>
-      {isLoading ? (
+      {loading ? (
         <Preloader />
       ) : (
         <ul className='cardList__container'>
-          {items.map((items) => (
-            <MoviesCard key={items.id} {...items} />
+          {items.map((obj) => (
+            <MoviesCard key={obj.id} {...obj} />
           ))}
         </ul>
       )}

@@ -12,7 +12,7 @@
   color: rgba(160, 160, 160, 1);
   mix-blend-mode: normal;
   margin: 0;
-  padding-bottom: 50px;
+  padding-bottom: 30px;
 }
 
 .portfolio__site {
@@ -22,30 +22,42 @@
   line-height: 50px;
   letter-spacing: -0.04em;
   color: rgba(0, 0, 0, 1);
-  padding-bottom: 19px;
+  padding: 20px 0 19px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid rgba(230, 230, 230, 1);
+  position: relative;
+  z-index: 0;
 }
 
 .portfolio__link {
   display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  right: 0%;
+  z-index: 1;
+  position: absolute;
+  z-index: 1;
 }
 
 .portfolio_arrow {
   width: 29px;
   height: 50px;
-}
-
-.portfolio__site_adaptiv {
-  padding-top: 20px;
+  z-index: 1;
 }
 
 .portfolio__site_spa {
-  padding-top: 20px;
   border: none;
+}
+
+.portfolio__block {
+  margin: 0;
+  padding: 0;
 }
 
 @media screen and (max-width: 800px) {
@@ -67,5 +79,9 @@
   .portfolio_arrow {
     width: 18px;
     height: 28px;
+  }
+
+  .portfolio__title {
+    padding-bottom: 20px;
   }
 }

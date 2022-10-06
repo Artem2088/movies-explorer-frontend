@@ -4,8 +4,20 @@
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  padding: 21px 70px 21px 60px;
+  padding: 21px 60px 21px 50px;
   position: relative;
+  background-color: rgba(255, 255, 255, 1);
+}
+
+.header-logout {
+  max-width: 1280px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 21px 60px 21px 50px;
+  position: relative;
+  background-color: rgba(70, 93, 255, 1);
 }
 
 .logo {
@@ -66,16 +78,24 @@
   color: #000000;
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (min-width: 768px) and (max-width:1024px) {
   .header {
-    padding: 21px 30px;
+    padding: 21px 15px;
+  }
+
+  .header-logout {
+    padding: 21px 15px;
   }
 
 }
 
-@media screen and (min-width: 320px) and (max-width:799px) {
+@media screen and (min-width: 320px) and (max-width:767px) {
   .header {
-    padding: 18px 14px;
+    padding: 18px 4px;
+  }
+
+  .header-logout {
+    padding: 18px 4px;
   }
 
   .header__link {

@@ -3,7 +3,7 @@ import "./AboutMe.css";
 
 const AboutMe = () => {
   return (
-    <div className='aboutMe' id='aboutMe'>
+    <section className='aboutMe' id='aboutMe'>
       <div className='aboutMe__header main-header__project'>
         <p className='aboutMe__title main-title__project'>Студент</p>
       </div>
@@ -30,7 +30,7 @@ const AboutMe = () => {
       <a href='https://vk.com/' className='aboutMe__link'>
         Vkontakte
       </a>
-    </div>
+    </section>
   );
 };
 

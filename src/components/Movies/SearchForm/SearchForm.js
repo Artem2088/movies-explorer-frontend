@@ -1,13 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import "./SearchForm.css";
 import search from "../../../images/icon/icon-search.svg";
 import searchInput from "../../../images/icon/icon-search-input.svg";
 import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
 
-const SearchForm = ({ searchValue, onChangeSearchValue }) => {
-  console.log(searchValue);
+const SearchForm = () => {
+  const [searchValue, setSearchValue] = useState("");
+
+  const onChangeSearchValue = (event) => {
+    setSearchValue(event.target.value);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  };
+
   return (
-    <div className='searchForm'>
+    <form className='searchForm'>
       <div className='searchForm__field'>
         <img src={searchInput} alt='поиск' className='searchForm__inputIcon' />
         <input
@@ -19,12 +28,16 @@ const SearchForm = ({ searchValue, onChangeSearchValue }) => {
           placeholder='Фильм'
           className='searchForm__input'
         />
-        <button className='searchForm__block'>
+        <button
+          className='searchForm__block'
+          type='submit'
+          onClick={handleSubmit}
+        >
           <img src={search} alt='поиск' className='searchForm__icon' />
         </button>
         <FilterCheckbox />
       </div>
-    </div>
+    </form>
   );
 };
 

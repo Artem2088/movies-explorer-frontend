@@ -3,7 +3,7 @@ import "./Footer.css";
 
 const Footer = () => {
   return (
-    <div className='footer'>
+    <footer className='footer'>
       <p className='footer__about'>
         Учебный проект Яндекс.Практикум х BeatFilm.
       </p>
@@ -22,7 +22,7 @@ const Footer = () => {
           </li>
         </ul>
       </div>
-    </div>
+    </footer>
   );
 };
 

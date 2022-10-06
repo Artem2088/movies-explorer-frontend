@@ -6,19 +6,29 @@ import SearchForm from "./SearchForm/SearchForm";
 import MoviesCardList from "./MoviesCardList/MoviesCardList";
 // import Modal from "../Modal/Modal";
 
-const Movies = ({ items, isLoading, onChangeSearchValue, searchValue }) => {
+const Movies = ({
+  items,
+  isLoading,
+  onChangeSearchValue,
+  searchValue,
+  handleGetMovies,
+}) => {
   return (
     <>
-      <div className='movies'>
+      <main className='movies'>
         <MoviesHeader />
         <SearchForm
           searchValue={searchValue}
           onChangeSearchValue={onChangeSearchValue}
         />
-        <MoviesCardList items={items} isLoading={isLoading} />
+        <MoviesCardList
+          items={items}
+          isLoading={isLoading}
+          handleGetMovies={handleGetMovies}
+        />
         <Footer />
         {/* <Modal /> */}
-      </div>
+      </main>
     </>
   );
 };

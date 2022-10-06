@@ -115,6 +115,10 @@
   color: #FFFFFF;
 }
 
+.login__link {
+  width: 40px;
+}
+
 @media screen and (max-width: 800px) {
   .login {
     padding: 232px 0;

@@ -5,6 +5,8 @@ import Movies from "../Movies/Movies";
 import SavedMovies from "../SavedMovies/SavedMovies";
 import Profile from "../Profile/Profile";
 import Main from "../Main/Main";
+import Header from "../Header/Header";
+import Footer from "../Footer/Footer";
 import PageNotFaund from "../PageNotFaund/PageNotFaund";
 import * as MoviesApi from "../../utils/MoviesApi";
 import "./App.css";
@@ -13,23 +15,24 @@ import { useEffect } from "react";
 
 function App() {
   const [movies, setMovies] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [searchValue, setSearchValue] = useState("");
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    handleGetMovies();
+  }, []);
+
+  function handleGetMovies() {
+    setLoading(true);
     MoviesApi.getMovies()
       .then((movies) => {
         setMovies(movies);
+        setLoading(false);
       })
       .catch((err) => {
         console.error(err);
-      })
-      .finally(() => setIsLoading(false));
-  }, []);
-
-  const onChangeSearchValue = (event) => {
-    setSearchValue(event.target.value);
-  };
+        setLoading(false);
+      });
+  }
 
   return (
     <div className='page'>
@@ -37,15 +40,24 @@ function App() {
         <Routes>
           <Route path='/signup' element={<Register />} />
           <Route path='/signin' element={<Login />} />
-          <Route path='/' element={<Main />} />
+          <Route
+            exact
+            path='/'
+            element={
+              <>
+                <Header />
+                <Main />
+                <Footer />
+              </>
+            }
+          />
           <Route
             path='/movies'
             element={
               <Movies
                 items={movies}
-                isLoading={isLoading}
-                searchValue={searchValue}
-                onChangeSearchValue={onChangeSearchValue}
+                loading={loading}
+                handleGetMovies={handleGetMovies}
               />
             }
           />

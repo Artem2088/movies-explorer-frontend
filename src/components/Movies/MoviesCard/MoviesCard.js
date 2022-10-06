@@ -6,7 +6,7 @@ import cardUnLike from "../../../images/icon/icon-disLike.svg";
 const MoviesCard = (items) => {
   const url = " https://api.nomoreparties.co/";
   return (
-    <figure className='card'>
+    <li className='card'>
       <figcaption className='card__info'>
         <p className='card__title'>{items.nameRU}</p>
         <div className='card__counter'>{items.duration}</div>
@@ -23,7 +23,7 @@ const MoviesCard = (items) => {
         alt={items.nameRU}
         className='card__image'
       />
-    </figure>
+    </li>
   );
 };
 
