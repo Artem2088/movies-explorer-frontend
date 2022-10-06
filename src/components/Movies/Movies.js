@@ -9,13 +9,13 @@ import MoviesCardList from "./MoviesCardList/MoviesCardList";
 const Movies = () => {
   return (
     <>
-      <div className='movies'>
+      <main className='movies'>
         <MoviesHeader />
         <SearchForm />
         <MoviesCardList />
         <Footer />
         {/* <Modal /> */}
-      </div>
+      </main>
     </>
   );
 };

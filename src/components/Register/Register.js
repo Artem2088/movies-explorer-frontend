@@ -7,7 +7,7 @@ const Register = () => {
   return (
     <div className='register'>
       <div className='register__container'>
-        <Link to={"/"}>
+        <Link to={"/"} className='register__link'>
           <div className='logo'></div>
         </Link>
         <h2 className='register__title'>Добро пожаловать!</h2>

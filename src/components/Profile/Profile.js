@@ -9,7 +9,7 @@ const Profile = () => {
   const [visible, setVisible] = useState(false);
 
   return (
-    <div className='profile'>
+    <main className='profile'>
       <MoviesHeader />
       <div className='profile__container'>
         <h2 className='profile__title'>Привет, Артем!</h2>
@@ -72,7 +72,7 @@ const Profile = () => {
         </div>
       </div>
       {/* <Modal /> */}
-    </div>
+    </main>
   );
 };
 

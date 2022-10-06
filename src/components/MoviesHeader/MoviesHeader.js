@@ -32,7 +32,12 @@ const MoviesHeader = () => {
           </button>
         </Link>
       </div>
-      <div onClick={() => setOpen(!open)} className='header-movies__btn'>
+      <div
+        onClick={() => setOpen(!open)}
+        className={`${
+          open ? "header-movies__btn-activ" : "header-movies__btn"
+        }`}
+      >
         {open ? <AiOutlineClose size={44} /> : <AiOutlineMenu size={44} />}
       </div>
       {open ? <Navigation /> : ""}

@@ -5,6 +5,8 @@ import Movies from "../Movies/Movies";
 import SavedMovies from "../SavedMovies/SavedMovies";
 import Profile from "../Profile/Profile";
 import Main from "../Main/Main";
+import Header from "../Header/Header";
+import Footer from "../Footer/Footer";
 import PageNotFaund from "../PageNotFaund/PageNotFaund";
 import "./App.css";
 
@@ -15,7 +17,17 @@ function App() {
         <Routes>
           <Route path='/signup' element={<Register />} />
           <Route path='/signin' element={<Login />} />
-          <Route path='/' element={<Main />} />
+          <Route
+            exact
+            path='/'
+            element={
+              <>
+                <Header />
+                <Main />
+                <Footer />
+              </>
+            }
+          />
           <Route path='/movies' element={<Movies />} />
           <Route path='/saved-movies' element={<SavedMovies />} />
           <Route path='/profile' element={<Profile />} />

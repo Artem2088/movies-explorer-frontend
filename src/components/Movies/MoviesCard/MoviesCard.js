@@ -6,7 +6,7 @@ import cardUnLike from "../../../images/icon/icon-disLike.svg";
 
 const MoviesCard = () => {
   return (
-    <figure className='card'>
+    <li className='card'>
       <figcaption className='card__info'>
         <p className='card__title'>33 слова о дизайне</p>
         <div className='card__counter'>1ч42м</div>
@@ -19,7 +19,7 @@ const MoviesCard = () => {
         </div>
       </figcaption>
       <img src={movieCard} alt='изображение фильма' className='card__image' />
-    </figure>
+    </li>
   );
 };
 

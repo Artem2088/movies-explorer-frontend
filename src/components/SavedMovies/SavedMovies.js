@@ -7,16 +7,16 @@ import MoviesCard from "../Movies/MoviesCard/MoviesCard";
 
 const SavedMovies = () => {
   return (
-    <div className='savedMovies'>
+    <main className='savedMovies'>
       <MoviesHeader />
       <SearchForm />
-      <section className='savedMovies__list'>
+      <ul className='savedMovies__list'>
         <MoviesCard />
         <MoviesCard />
         <MoviesCard />
-      </section>
+      </ul>
       <Footer />
-    </div>
+    </main>
   );
 };
 

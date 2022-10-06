@@ -154,6 +154,10 @@
   color: #FFFFFF;
 }
 
+.register__link {
+  width: 40px;
+}
+
 @media screen and (max-width: 800px) {
   .register {
     padding: 232px 0;

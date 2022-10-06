@@ -6,7 +6,7 @@ import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
 
 const SearchForm = () => {
   return (
-    <div className='searchForm'>
+    <form className='searchForm'>
       <div className='searchForm__field'>
         <img src={searchInput} alt='поиск' className='searchForm__inputIcon' />
         <input
@@ -21,7 +21,7 @@ const SearchForm = () => {
         </button>
         <FilterCheckbox />
       </div>
-    </div>
+    </form>
   );
 };
 
