@@ -4,15 +4,43 @@ import MoviesHeader from "../MoviesHeader/MoviesHeader";
 import Footer from "../Footer/Footer";
 import SearchForm from "./SearchForm/SearchForm";
 import MoviesCardList from "./MoviesCardList/MoviesCardList";
-// import Modal from "../Modal/Modal";
+import * as MoviesApi from "../../utils/MoviesApi";
+import * as MainApi from "../../utils/MainApi";
+import Modal from "../Modal/Modal";
+import { useState } from "react";
+import { useEffect } from "react";
 
-const Movies = ({
-  items,
-  isLoading,
-  onChangeSearchValue,
-  searchValue,
-  handleGetMovies,
-}) => {
+const Movies = ({ onChangeSearchValue, searchValue }) => {
+  const [movies, setMovies] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  // useEffect(() => {
+  //   handleGetMovies();
+  // }, []);
+
+  async function handleGetMovies(searchValue) {
+    setLoading(true);
+    if (!searchValue) {
+      return false;
+    }
+
+    try {
+      const data = await MoviesApi.getMovies();
+      const filterData = data.filter(({ nameRU }) =>
+        nameRU.toLowerCase().includes(searchValue.toLowerCase())
+      );
+      localStorage.setItem("movies", JSON.stringify(filterData));
+      localStorage.setItem("moviesInputSearch", searchValue);
+      setMovies(filterData);
+    } catch (err) {
+      setMovies([]);
+      localStorage.removeItem("movies");
+      localStorage.removeItem("moviesInputSearch");
+    } finally {
+      setLoading(false);
+    }
+  }
+
   return (
     <>
       <main className='movies'>
@@ -20,11 +48,12 @@ const Movies = ({
         <SearchForm
           searchValue={searchValue}
           onChangeSearchValue={onChangeSearchValue}
+          handleGetMovies={handleGetMovies}
         />
         <MoviesCardList
-          items={items}
-          isLoading={isLoading}
+          items={movies}
           handleGetMovies={handleGetMovies}
+          loading={loading}
         />
         <Footer />
         {/* <Modal /> */}

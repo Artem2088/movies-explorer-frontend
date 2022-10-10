@@ -4,7 +4,7 @@ import search from "../../../images/icon/icon-search.svg";
 import searchInput from "../../../images/icon/icon-search-input.svg";
 import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
 
-const SearchForm = () => {
+const SearchForm = ({ handleGetMovies }) => {
   const [searchValue, setSearchValue] = useState("");
 
   const onChangeSearchValue = (event) => {
@@ -13,6 +13,7 @@ const SearchForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    handleGetMovies(searchValue);
   };
 
   return (
