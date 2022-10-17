@@ -63,7 +63,7 @@
     display: block;
     align-items: center;
     text-align: center;
-    color: #000000;
+    color: rgba(255, 48, 85, 1);
 }
 
 .modal__close {

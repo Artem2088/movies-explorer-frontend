@@ -2,9 +2,18 @@ import React from "react";
 import "./Modal.css";
 import { AiOutlineClose } from "react-icons/ai";
 import { useState } from "react";
+import { useEffect } from "react";
 
-const Modal = () => {
-  const [open, setOpen] = useState(true);
+const Modal = ({ title, span, modal }) => {
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    if (modal) {
+      setOpen(true);
+    } else {
+      setOpen(false);
+    }
+  }, [modal]);
 
   return (
     <div className={`${open ? "modal " : "modal-hidden "}`}>
@@ -14,8 +23,8 @@ const Modal = () => {
         </button>
       </div>
       <div className='modal__container'>
-        <h3 className='modal__title'>Привет, Артем!</h3>
-        <span className='modal__span'>Произошла ошибка, попробуйте снова!</span>
+        <h3 className='modal__title'>{title}</h3>
+        <span className='modal__span'>{span}</span>
       </div>
     </div>
   );

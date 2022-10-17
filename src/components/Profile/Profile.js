@@ -1,31 +1,67 @@
 import React from "react";
-// import Modal from "../Modal/Modal";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import MoviesHeader from "../MoviesHeader/MoviesHeader";
+import * as MainApi from "../../utils/MainApi";
 import "./Profile.css";
+import { useContext } from "react";
+import { useEffect } from "react";
 
-const Profile = () => {
+const Profile = ({ modal, handleLogout, handleLogoutMovie }) => {
   const [visible, setVisible] = useState(false);
+  const currentUser = useContext(CurrentUserContext);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [newUser, setNewUser] = useState([]);
+
+  useEffect(() => {
+    setName(currentUser.name);
+    setEmail(currentUser.email);
+  }, [currentUser]);
+
+  const handleChangeName = (e) => {
+    setName(e.target.value);
+  };
+
+  const handleChangeEmail = (e) => {
+    setEmail(e.target.value);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    updateProfile(name, email);
+  };
+
+  const updateProfile = (name, email) => {
+    MainApi.patchUserMe(name, email)
+      .then(() => {
+        setNewUser(newUser);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <main className='profile'>
       <MoviesHeader />
       <div className='profile__container'>
-        <h2 className='profile__title'>Привет, Артем!</h2>
-        <form className='form'>
+        <h2 className='profile__title'>Привет, {currentUser.name}!</h2>
+        <form className='form' onSubmit={handleSubmit}>
           <fieldset className='fieldset profile__fieldset'>
             <label className='profile__span'>Имя</label>
             <input
               className='input profile__input'
               id='name'
               type='text'
-              name='Email'
+              name='name'
               minLength='2'
               maxLength='40'
               required
               autoComplete='off'
-              value={"Артем"}
+              onChange={handleChangeName}
+              value={name || ""}
             />
             <label className='profile__span_mail'>E-mail</label>
             <input
@@ -37,7 +73,8 @@ const Profile = () => {
               maxLength='40'
               required
               autoComplete='off'
-              value={"pochta@yandex.ru"}
+              onChange={handleChangeEmail}
+              value={email || ""}
             />
           </fieldset>
         </form>
@@ -49,9 +86,9 @@ const Profile = () => {
           <button className='profile__redact' onClick={() => setVisible(true)}>
             Редактировать
           </button>
-          <Link to={"/"} className='profile__logout'>
+          <button className='profile__logout' onClick={handleLogout}>
             Выйти из аккаунта
-          </Link>
+          </button>
         </div>
         <div
           className={`${
@@ -63,15 +100,11 @@ const Profile = () => {
           <span className='profile__error-span'>
             При обновлении профиля произошла ошибка.
           </span>
-          <button
-            className='button profile__button'
-            onClick={() => setVisible(false)}
-          >
+          <button className='button profile__button' onClick={handleSubmit}>
             <span className='profile__button-span'>Сохранить</span>
           </button>
         </div>
       </div>
-      {/* <Modal /> */}
     </main>
   );
 };

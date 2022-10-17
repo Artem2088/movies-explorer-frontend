@@ -7,12 +7,13 @@ function checkResponse(res) {
   return Promise.reject(`${res.status} ${res.statusText}`);
 }
 
-export const getMovies = (movies) => {
-  return fetch(`${MOVIES_API}`, {
+export const getMovies = async (movies) => {
+  const res = await fetch(`${MOVIES_API}`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(movies),
-  }).then(checkResponse);
+  });
+  return checkResponse(res);
 };

@@ -1,8 +1,9 @@
 .preloader {
   position: absolute;
-  top: 0;
+  top: 23%;
   left: 45%;
 }
+
 .preloader__round {
   display: block;
   position: relative;
@@ -14,6 +15,7 @@
   border-top-color: #337ab7;
   animation: preloader__round-spin 2s linear infinite;
 }
+
 .preloader__round:before {
   content: "";
   position: absolute;
@@ -26,6 +28,7 @@
   border-top-color: #bfe2ff;
   animation: preloader__round-spin 3s linear infinite;
 }
+
 .preloader__round:after {
   content: "";
   position: absolute;
@@ -38,10 +41,12 @@
   border-top-color: #337ab7;
   animation: preloader__round-spin 1.5s linear infinite;
 }
+
 @keyframes preloader__round-spin {
   0% {
     transform: rotate(0deg);
   }
+
   100% {
     transform: rotate(360deg);
   }
