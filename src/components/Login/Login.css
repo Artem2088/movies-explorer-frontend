@@ -55,19 +55,27 @@
 .login__error_email {
   position: absolute;
   left: 0;
-  top: 63.49%;
-  display: none;
+  top: 39.49%;
+  display: block;
 }
 
 .login__error_password {
   position: absolute;
   left: 0;
   top: 100.49%;
-  display: none;
+  display: block;
 }
 
 .login__button {
   background: rgba(255, 104, 56, 1);
+  padding: 15px 24px;
+  color: rgba(255, 255, 255, 1);
+  max-width: 396px;
+  width: 70vw;
+}
+
+.login__button-disable {
+  background: rgba(255, 104, 56, 0.4);
   padding: 15px 24px;
   color: rgba(255, 255, 255, 1);
   max-width: 396px;

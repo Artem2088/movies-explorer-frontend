@@ -50,11 +50,17 @@
   text-decoration: none;
 }
 
-.navigation__link:hover {
+.navigation__link.active {
   color: rgba(204, 204, 204, 1);
   transition: all 0.3s linear;
   text-decoration: underline;
 }
+
+/* .navigation__link:hover {
+  color: rgba(204, 204, 204, 1);
+  transition: all 0.3s linear;
+  text-decoration: underline;
+} */
 
 .navigation__cover {
   display: block;
@@ -79,6 +85,7 @@
   align-items: center;
   justify-content: center;
   gap: 28px;
+  list-style-type: none;
 }
 
 @media screen and (min-width: 320px) and (max-width:425px) {

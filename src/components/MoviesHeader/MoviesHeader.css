@@ -1,6 +1,8 @@
 .header-movies__container {
   display: flex;
   flex-direction: row;
+  list-style-type: none;
+  align-items: center;
 }
 
 .header-movies__link {

@@ -7,18 +7,24 @@ const Navigation = () => {
   return (
     <div className='navigation'>
       <div className='navigation-links__container '>
-        <div className='navigation__link-blok'>
-          <NavLink to={"/"} className='navigation__link' end>
-            Главная
-          </NavLink>
-          <NavLink to={"/movies"} className='navigation__link'>
-            Фильмы
-          </NavLink>
-          <NavLink to={"/saved-movies"} className='navigation__link'>
-            Сохранённые фильмы
-          </NavLink>
-        </div>
-        <Link to={"/profile"} className='navigation__link-btn'>
+        <nav className='navigation__link-blok'>
+          <li>
+            <NavLink to='/' className='navigation__link' end>
+              Главная
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to='/movies' className='navigation__link'>
+              Фильмы
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to='/saved-movies' className='navigation__link'>
+              Сохранённые фильмы
+            </NavLink>
+          </li>
+        </nav>
+        <Link to='/profile' className='navigation__link-btn'>
           <button
             className='header-movies__button  navigation__button'
             type='submit'

@@ -12,7 +12,6 @@
   padding: 74px 70px;
   margin: 0 auto;
   max-width: 410px;
-  width: 70vw;
 }
 
 .profile__title {
@@ -130,10 +129,12 @@
 
 .profile__botom-container_activ {
   display: flex;
+  flex-direction: column;
+  position: relative;
 }
 
 .profile__button {
-  width: 410px;
+  max-width: 410px;
   height: 45px;
   background: rgba(255, 104, 56, 1);
 }
@@ -153,7 +154,7 @@
 }
 
 .profile__error-span {
-  display: none;
+  display: block;
   font-style: normal;
   font-weight: 400;
   font-size: 11px;
@@ -161,6 +162,20 @@
   text-align: center;
   color: rgba(255, 0, 76, 1);
   padding-bottom: 20px;
+}
+
+.profile__input-span {
+  display: block;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 11px;
+  line-height: 13px;
+  text-align: center;
+  color: rgba(255, 0, 76, 1);
+  padding-bottom: 20px;
+  position: absolute;
+  bottom: 100%;
+  left: 36%;
 }
 
 
@@ -200,6 +215,10 @@
     width: 260px;
     height: 45px;
 
+  }
+
+  .profile__input-span {
+    left: 30%;
   }
 }
 

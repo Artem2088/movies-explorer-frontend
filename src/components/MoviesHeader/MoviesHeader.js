@@ -1,6 +1,6 @@
 import React from "react";
 import Navigation from "../Navigation/Navigation";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
 import iconLogo from "../../images/icon/button-icon-main.svg";
 import "./MoviesHeader.css";
@@ -14,13 +14,23 @@ const MoviesHeader = () => {
       <Link to={"/"}>
         <div className='logo'></div>
       </Link>
-      <div className='header-movies__container'>
-        <Link to={"/movies"} className='header-movies__link'>
-          Фильмы
-        </Link>
-        <Link to={"/saved-movies"} className='header-movies__link'>
-          Сохранённые фильмы
-        </Link>
+      <nav className='header-movies__container'>
+        <li>
+          <NavLink
+            to='/movies'
+            className='header-movies__link navigation__link'
+          >
+            Фильмы
+          </NavLink>
+        </li>
+        <li>
+          <NavLink
+            to='/saved-movies'
+            className='header-movies__link navigation__link'
+          >
+            Сохранённые фильмы
+          </NavLink>
+        </li>
         <Link to={"/profile"}>
           <button className='header-movies__button' type='submit'>
             <img
@@ -31,7 +41,7 @@ const MoviesHeader = () => {
             Аккаунт
           </button>
         </Link>
-      </div>
+      </nav>
       <div
         onClick={() => setOpen(!open)}
         className={`${

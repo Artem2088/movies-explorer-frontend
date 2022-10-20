@@ -20,7 +20,7 @@ const SearchForm = ({
   };
 
   const searchFormValue = () => {
-    if (pathname !== "saved-movies") {
+    if (pathname !== "/saved-movies") {
       handleGetMovies(searchValue);
     } else {
       handlePostMovie(searchValue);

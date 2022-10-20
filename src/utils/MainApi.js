@@ -93,31 +93,17 @@ export const postMovie = async () => {
       authorization: `Bearer ${localStorage.getItem("jwt")}`,
       "Content-Type": "application/json",
     },
-    // body: JSON.stringify({
-    //   country,
-    //   director,
-    //   duration,
-    //   year,
-    //   description,
-    //   image,
-    //   trailerLink,
-    //   thumbnail,
-    //   movieId,
-    //   nameRU,
-    //   nameEN,
-    // }),
   });
   return checkResponse(res);
 };
 
-export const deleteMovie = async (movie) => {
-  const res = await fetch(`${MAIN_API}/movies/:movieId`, {
+export const deleteMovie = async (movieId) => {
+  const res = await fetch(`${MAIN_API}/movies/${movieId}`, {
     metod: "DELETE",
     headers: {
       authorization: `Bearer ${localStorage.getItem("jwt")}`,
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ movie }),
   });
   return checkResponse(res);
 };

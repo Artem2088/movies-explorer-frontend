@@ -1,5 +1,5 @@
 import React from "react";
-// import Modal from "../Modal/Modal";
+import { useForm } from "react-hook-form";
 import "./Register.css";
 import { Link } from "react-router-dom";
 import { useState } from "react";
@@ -8,6 +8,11 @@ const Register = ({ onRegister }) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isValid },
+  } = useForm({ mode: "onTouched" });
 
   const handleRegName = (e) => {
     setName(e.target.value);
@@ -21,7 +26,7 @@ const Register = ({ onRegister }) => {
     setPassword(e.target.value);
   };
 
-  const handleSubmit = (e) => {
+  const handleRegSubmit = (e) => {
     e.preventDefault();
     onRegister(name, email, password);
   };
@@ -34,65 +39,89 @@ const Register = ({ onRegister }) => {
         </Link>
         <h2 className='register__title'>Добро пожаловать!</h2>
       </div>
-      <form className='form' onSubmit={handleSubmit}>
+      <form
+        className='form'
+        onSubmit={handleSubmit(handleRegSubmit)}
+        noValidate
+      >
         <fieldset className='fieldset register__fieldset'>
           <label className='register__label'>Имя</label>
           <input
+            {...register("Name", {
+              required: true,
+              minLength: "2",
+              maxLength: "40",
+            })}
             className='input register__input'
             id='name'
             type='text'
             name='Name'
             placeholder='Имя'
-            minLength='2'
-            maxLength='40'
-            required
             autoComplete='on'
             onChange={handleRegName}
             value={name}
           />
-          <span className='register__error register__error_name'>
-            Что-то пошло не так...
-          </span>
+          {errors?.Name && (
+            <span className='register__error register__error_name'>
+              Что-то пошло не так...
+            </span>
+          )}
+
           <label className='register__label'>E-mail</label>
           <input
+            {...register("Email", {
+              required: true,
+              minLength: "2",
+              maxLength: "40",
+              pattern: /^[A-Z0-9._%+-]+@[A-Z0-9-]+.+.[A-Z]{2,4}$/i,
+            })}
             className='input register__input'
             id='email'
             type='email'
             name='Email'
             placeholder='Email'
-            minLength='2'
-            maxLength='40'
-            required
             autoComplete='on'
             onChange={handleRegEmail}
             value={email}
           />
-          <span className='register__error register__error_email'>
-            Что-то пошло не так...
-          </span>
+          {errors?.Email && (
+            <span className='register__error register__error_email'>
+              Что-то пошло не так...
+            </span>
+          )}
+
           <label className='register__label'>Пароль</label>
           <input
+            {...register("password", {
+              required: true,
+              minLength: "2",
+              maxLength: "40",
+            })}
             className='input register__input'
             id='password'
             name='password'
             type='password'
             placeholder='Пароль'
-            minLength='2'
-            maxLength='40'
-            required
             autoComplete='on'
             onChange={handleRegPass}
             value={password}
           />
-          <span className='register__error register__error_password'>
-            Что-то пошло не так...
-          </span>
+          {errors?.password && (
+            <span className='register__error register__error_password'>
+              Что-то пошло не так...
+            </span>
+          )}
         </fieldset>
       </form>
       <button
-        className='button register__button'
+        className={
+          isValid
+            ? "button register__button"
+            : "button register__button-disable"
+        }
         type='submit'
-        onClick={handleSubmit}
+        onClick={handleRegSubmit}
+        disabled={!isValid}
       >
         <span className='register__span'> Зарегестрироваться</span>
       </button>
@@ -102,7 +131,6 @@ const Register = ({ onRegister }) => {
           Войти
         </Link>
       </p>
-      {/* <Modal /> */}
     </div>
   );
 };
