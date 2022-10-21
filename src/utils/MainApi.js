@@ -86,7 +86,7 @@ export const getMovies = async (movie) => {
   return checkResponse(res);
 };
 
-export const postMovie = async () => {
+export const postMovie = async (item) => {
   const res = await fetch(`${MAIN_API}/movies`, {
     metod: "POST",
     headers: {

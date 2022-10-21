@@ -1,9 +1,15 @@
 import { React, useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import "./FilterCheckbox.css";
 
-const FilterCheckbox = ({ handleShortMovie, updateData }) => {
+const FilterCheckbox = ({
+  handleShortMovieAdd,
+  updateData,
+  handleShortMovie,
+}) => {
   const [checked, setChecked] = useState(false);
   const [activBox, setActivBox] = useState(false);
+  const pathname = useLocation();
 
   useEffect(() => {
     if (!activBox) {
@@ -18,7 +24,11 @@ const FilterCheckbox = ({ handleShortMovie, updateData }) => {
   }
 
   function handleCheckbox() {
-    handleShortMovie();
+    if (pathname == "/movies") {
+      return handleShortMovie();
+    } else {
+      handleShortMovieAdd();
+    }
   }
 
   function onChange() {

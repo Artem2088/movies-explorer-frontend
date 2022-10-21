@@ -7,12 +7,12 @@ import "./SavedMovies.css";
 
 const SavedMovies = ({
   checked,
-  shortMovie,
+  shortMovieSave,
   movie,
   onChangeSearchValue,
   searchValue,
-  handleGetMovies,
-  handleShortMovie,
+  handleGetMoviesAdd,
+  handleShortMovieAdd,
   handleDeleteMovie,
   handlePostMovie,
 }) => {
@@ -22,11 +22,12 @@ const SavedMovies = ({
       <SearchForm
         searchValue={searchValue}
         onChangeSearchValue={onChangeSearchValue}
-        handleGetMovies={handleGetMovies}
-        handleShortMovie={handleShortMovie}
+        handleGetMoviesAdd={handleGetMoviesAdd}
+        handleShortMovieAdd={handleShortMovieAdd}
       />
       <SavedCardList
-        items={checked ? shortMovie : movie}
+        shortMovieSave={shortMovieSave}
+        // items={checked ? shortMovie : movie}
         handleDeleteMovie={handleDeleteMovie}
         handlePostMovie={handlePostMovie}
       />

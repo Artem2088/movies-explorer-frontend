@@ -7,14 +7,12 @@ import cardUnLike from "../../../images/icon/icon-disLike.svg";
 import { MOVIES_URL } from "../../../utils/Constant";
 
 const MoviesCard = ({ id, handlePostMovie, handleDeleteMovie, item }) => {
-  function checkLike() {
-    let result = JSON.parse(localStorage.getItem("postMovie")) || [];
+  // function checkLike() {
+  //   let result = JSON.parse(localStorage.getItem("postMovie")) || [];
 
-    return Boolean(result.find((el) => el == id));
-  }
-
-  const [likeActiv, setlikeActiv] = useState(checkLike());
-
+  //   return Boolean(result.find((el) => el == id));
+  // }
+  // const [likeActiv, setlikeActiv] = useState(checkLike());
   const { pathname } = useLocation();
 
   const {
@@ -51,18 +49,19 @@ const MoviesCard = ({ id, handlePostMovie, handleDeleteMovie, item }) => {
     });
   };
 
-  const handleClick = (e) => {
-    e.preventDefault();
+  const handleClick = (e, id) => {
+    // e.preventDefault();
 
     // let like = !likeActiv;
+    // console.log(likeActiv);
 
-    postMovie();
-
+    postMovie(id);
+    // console.log();
     // setlikeActiv(like);
   };
 
   const handleDelete = () => {
-    handleDeleteMovie(id);
+    handleDeleteMovie(movieId);
   };
 
   return (
@@ -71,10 +70,19 @@ const MoviesCard = ({ id, handlePostMovie, handleDeleteMovie, item }) => {
         <p className='card__title'>{nameRU}</p>
         <div className='card__counter'>{duration}</div>
         <div className='card__block'>
-          <button className='card__button' onClick={handleClick}>
+          <button
+            className='card__button'
+            onClick={(e) => {
+              handleClick(e);
+            }}
+          >
             {pathname == "/movies" ? (
               <img
-                src={likeActiv ? cardLikeActiv : cardLike}
+                src={
+                  // likeActiv ?
+                  // cardLikeActiv :
+                  cardLike
+                }
                 alt='лайк'
                 className='card__like'
               />

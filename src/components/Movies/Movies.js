@@ -16,6 +16,9 @@ const Movies = ({
   isLoading,
   checked,
   handlePostMovie,
+  addMovie,
+  handleGetAllMovies,
+  resultAllMovie,
 }) => {
   return (
     <>
@@ -26,12 +29,18 @@ const Movies = ({
           onChangeSearchValue={onChangeSearchValue}
           handleGetMovies={handleGetMovies}
           handleShortMovie={handleShortMovie}
+          handleGetAllMovies={handleGetAllMovies}
           updateData={updateData}
         />
         <MoviesCardList
-          items={checked ? shortMovie : movie}
+          handleGetAllMovies={handleGetAllMovies}
+          postMovie={addMovie}
+          // items={checked ? shortMovie : resultAllMovie}
+          checked={checked}
+          shortMovie={shortMovie}
           isLoading={isLoading}
           handlePostMovie={handlePostMovie}
+          resultAllMovie={resultAllMovie}
         />
         <Footer />
       </main>

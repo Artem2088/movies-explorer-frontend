@@ -28,10 +28,12 @@ function App() {
   const [filterPostMovie, setFilterPostMovie] = useState([]);
   const [deleteMovie, setDeleteMovie] = useState([]);
   const [shortMovie, setShortMovie] = useState([]);
+  const [shortMovieSave, setShortMovieSave] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [checked, setChecked] = useState(false);
   const [postMovie, setPostMovie] = useState([]);
   const [click, setClick] = useState("");
+  const [resultAllMovie, setResultAllMovie] = useState([]);
 
   // ----------------------useEffect----------------------
   useEffect(() => {
@@ -68,6 +70,126 @@ function App() {
     setClick(click);
   };
 
+  // -------------------------------------Поиск по всем фильмам -----------------------------------
+  const handleShortMovie = () => {
+    if (!checked) {
+      setIsLoading(true);
+    }
+    let resultMovie = JSON.parse(localStorage.getItem("films"));
+    const shortMovie = resultMovie.filter(({ duration }) => duration <= 40);
+    if (shortMovie) {
+      localStorage.setItem("shortMovie", JSON.stringify(shortMovie));
+      setShortMovie(shortMovie);
+      setIsLoading(false);
+    } else {
+      setModal(true);
+      setTitle("Ничего не найдено");
+      setIsLoading(false);
+    }
+  };
+
+  const handleGetAllMovies = async (searchValue) => {
+    setIsLoading(true);
+    if (!searchValue) {
+      setModal(true);
+      setTitle("Нужно ввести ключевое слово");
+      setIsLoading(false);
+      return false;
+    }
+    let resultMovie = await JSON.parse(localStorage.getItem("films"));
+    const filterResultMovie = await resultMovie.filter(({ nameRU }) =>
+      nameRU.toLowerCase().includes(searchValue.toLowerCase())
+    );
+    if (filterResultMovie.length > 0) {
+      setIsLoading(true);
+      setResultAllMovie(filterResultMovie);
+      localStorage.setItem(
+        "filterResultMovie",
+        JSON.stringify(filterResultMovie)
+      );
+      setIsLoading(false);
+    } else {
+      setModal(true);
+      setTitle("Ничего не найдено");
+      setIsLoading(false);
+    }
+  };
+  //--------------------------------------------Поиск по сохраненным фильмам---------------------------------------------------
+
+  const handleShortMovieAdd = () => {
+    if (!checked) {
+      setIsLoading(true);
+      MainApi.getMovies()
+        .then(() => {
+          let resultMovie = JSON.parse(localStorage.getItem("postFilm")) || [];
+          const shortMovieSave = resultMovie.filter(
+            ({ duration }) => duration <= 40
+          );
+          localStorage.setItem("shortMovieAdd", JSON.stringify(shortMovieSave));
+          setShortMovieSave(shortMovieSave);
+        })
+        .catch((err) => {
+          console.log(err);
+          setShortMovieSave([]);
+          setModal(true);
+          setTitle("Что-то пошло не так...");
+          setSpan(err);
+        })
+        .finally(() => setIsLoading(false));
+      return false;
+    }
+  };
+
+  const handleGetMoviesAdd = (searchValue) => {
+    setIsLoading(true);
+    if (!searchValue) {
+      setModal(true);
+      setTitle("Нужно ввести ключевое слово");
+      setIsLoading(false);
+      return false;
+    }
+    MainApi.getMovies()
+      .then(() => {
+        let resultMovie = JSON.parse(localStorage.getItem("postFilm")) || [];
+        const filterSaveData = resultMovie.filter(({ nameRU }) =>
+          nameRU.toLowerCase().includes(searchValue.toLowerCase())
+        );
+        localStorage.setItem("filterSaveData", JSON.stringify(filterSaveData));
+        setMovie(filterSaveData);
+        console.log(movie);
+      })
+      .catch((err) => {
+        console.log(err);
+        setMovie([]);
+        setModal(true);
+        setTitle("Что-то пошло не так...");
+        setSpan(err);
+      })
+      .finally(() => setIsLoading(false));
+  };
+
+  // ------------------------------------------Сохранение и удаление фильмов в базу ------------------------------
+
+  async function handlePostMovie(id, movie) {
+    // const Favorites = JSON.parse(localStorage.getItem("postMovie")) || [];
+    // let result = [];
+    // const existFilm = Favorites.find((el) => el == id);
+    // if (existFilm) result = Favorites.filter((el) => el != id);
+    // else result = [...Favorites, id];
+    await MainApi.postMovie(movie);
+    try {
+      // localStorage.setItem("postMovie", JSON.stringify(result));
+      setPostMovie(movie);
+      console.log(postMovie);
+    } catch (err) {
+      console.log(err);
+      setPostMovie([]);
+      setModal(true);
+      setTitle("Что-то пошло не так...");
+      setSpan(err);
+    }
+  }
+
   // mainApi.deleteMovie(movie._id)
   // .then((deletedMovie) => {
   //   const newList = moviesList.filter(item => item.movieId !== deletedMovie.movieId);
@@ -98,74 +220,7 @@ function App() {
       });
   };
 
-  const handleShortMovie = () => {
-    if (!checked) {
-      setIsLoading(true);
-      MainApi.getMovies()
-        .then((res) => {
-          const shortMovie = movies.filter(({ duration }) => duration <= 40);
-          localStorage.setItem("shortMovie", JSON.stringify(shortMovie));
-          setShortMovie(shortMovie);
-        })
-        .catch((err) => {
-          console.log(err);
-          setShortMovie([]);
-          setModal(true);
-          setTitle("Что-то пошло не так...");
-          setSpan(err);
-        })
-        .finally(() => setIsLoading(false));
-      return false;
-    }
-  };
-
-  async function handlePostMovie(id, movie) {
-    const Favorites = JSON.parse(localStorage.getItem("postMovie")) || [];
-    let result = [];
-    const existFilm = Favorites.find((el) => el == id);
-    if (existFilm) result = Favorites.filter((el) => el != id);
-    else result = [...Favorites, id];
-    await MainApi.postMovie(movie);
-    try {
-      localStorage.setItem("postMovie", JSON.stringify(result));
-      setPostMovie(postMovie);
-      console.log(postMovie);
-    } catch (err) {
-      console.log(err);
-      setPostMovie([]);
-      setModal(true);
-      setTitle("Что-то пошло не так...");
-      setSpan(err);
-    }
-  }
-
-  const handleGetMovies = (searchValue) => {
-    setIsLoading(true);
-    if (!searchValue) {
-      setModal(true);
-      setTitle("Нужно ввести ключевое слово");
-      setIsLoading(false);
-      return false;
-    }
-    MainApi.getMovies()
-      .then(() => {
-        const filterData = movies.filter(({ nameRU }) =>
-          nameRU.toLowerCase().includes(searchValue.toLowerCase())
-        );
-        localStorage.setItem("filterData", JSON.stringify(filterData));
-        setMovie(filterData);
-        console.log(filterData);
-      })
-      .catch((err) => {
-        console.log(err);
-        setMovie([]);
-        setModal(true);
-        setTitle("Что-то пошло не так...");
-        setSpan(err);
-      })
-      .finally(() => setIsLoading(false));
-  };
-
+  // ------------------------------------ Запрос на получение фильмов с BetFilm ----------------------
   const getBetfilm = () => {
     MoviesApi.getMovies()
       .then((movies) => {
@@ -234,10 +289,11 @@ function App() {
     localStorage.removeItem("togle");
     localStorage.removeItem("filterData");
     localStorage.removeItem("postMovie");
+    localStorage.removeItem("filterResultMovie");
     setisLoggedIn(false);
     navigate("/");
   };
-
+  //  ---------------------------------------------------------------------------------------
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className='page'>
@@ -267,12 +323,14 @@ function App() {
                   movie={movie}
                   modal={modal}
                   shortMovie={shortMovie}
-                  handleGetMovies={handleGetMovies}
+                  // handleGetMovies={handleGetMovies}
                   handleShortMovie={handleShortMovie}
+                  handleGetAllMovies={handleGetAllMovies}
+                  resultAllMovie={resultAllMovie}
                   updateData={updateData}
                   checked={checked}
-                  handlePostMovie={handlePostMovie}
-                  postMovie={postMovie}
+                  // handlePostMovie={handlePostMovie}
+                  // postMovie={postMovie}
                   onClick={handleClick}
                   isLoading={isLoading}
                 />
@@ -285,11 +343,13 @@ function App() {
                   isLoggedIn={isLoggedIn}
                   modal={modal}
                   movie={movie}
-                  shortMovie={shortMovie}
+                  shortMovieSave={shortMovieSave}
                   checked={checked}
                   isLoading={isLoading}
-                  handleGetMovies={handleGetMovies}
-                  handleShortMovie={handleShortMovie}
+                  handlePostMovie={handlePostMovie}
+                  postMovie={postMovie}
+                  handleGetMoviesAdd={handleGetMoviesAdd}
+                  handleShortMovieAdd={handleShortMovieAdd}
                   handleDeleteMovie={handleDeleteMovie}
                 />
               }

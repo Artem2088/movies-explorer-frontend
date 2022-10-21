@@ -4,12 +4,15 @@ import search from "../../../images/icon/icon-search.svg";
 import searchInput from "../../../images/icon/icon-search-input.svg";
 import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
 import { useLocation } from "react-router-dom";
+import { useEffect } from "react";
 
 const SearchForm = ({
-  handleGetMovies,
+  handleGetMoviesAdd,
+  handleShortMovieAdd,
   handleShortMovie,
   handlePostMovie,
   updateData,
+  handleGetAllMovies,
 }) => {
   const [searchValue, setSearchValue] = useState("");
   const pathname = useLocation();
@@ -21,7 +24,7 @@ const SearchForm = ({
 
   const searchFormValue = () => {
     if (pathname !== "/saved-movies") {
-      handleGetMovies(searchValue);
+      handleGetMoviesAdd(searchValue);
     } else {
       handlePostMovie(searchValue);
     }
@@ -53,6 +56,7 @@ const SearchForm = ({
           <img src={search} alt='поиск' className='searchForm__icon' />
         </button>
         <FilterCheckbox
+          handleShortMovieAdd={handleShortMovieAdd}
           handleShortMovie={handleShortMovie}
           updateData={updateData}
         />

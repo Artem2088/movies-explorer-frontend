@@ -4,11 +4,11 @@ import Preloader from "../Preloader/Preloader";
 import "./MoviesCardList.css";
 
 const MoviesCardList = ({
-  items,
   isLoading,
   handlePostMovie,
   postMovie,
   handleDeleteMovie,
+  shortMovieSave,
 }) => {
   const Films = JSON.parse(localStorage.getItem("films")) || [];
   const Favorites = JSON.parse(localStorage.getItem("postMovie")) || [];
