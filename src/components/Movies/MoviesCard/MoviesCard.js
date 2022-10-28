@@ -6,98 +6,83 @@ import cardLikeActiv from "../../../images/icon/icon-like-red.svg";
 import cardUnLike from "../../../images/icon/icon-disLike.svg";
 import { MOVIES_URL } from "../../../utils/Constant";
 
-const MoviesCard = ({ id, handlePostMovie, handleDeleteMovie, item }) => {
-  // function checkLike() {
-  //   let result = JSON.parse(localStorage.getItem("postMovie")) || [];
+const MoviesCard = (obj) => {
+  const handleClick = () => {
+    window.open(obj.trailerLink);
+  };
 
-  //   return Boolean(result.find((el) => el == id));
-  // }
-  // const [likeActiv, setlikeActiv] = useState(checkLike());
   const { pathname } = useLocation();
 
-  const {
-    country,
-    director,
-    year,
-    description,
-    image,
-    thumbnail,
-    nameRU,
-    nameEN,
-    duration,
-    trailer,
-    movieId,
-  } = item;
+  const [like, setLike] = useState(false);
 
-  const postMovie = () => {
-    handlePostMovie({
-      country: country || "Не указано",
-      director: director || "Не указано",
-      duration: duration || 0,
-      year: year || "Не указано",
-      description: description || "Не указано",
-      image:
-        image || "https://bentizol.ru/assets/file-storage/images/blog-1_0.jpg",
-      trailer:
-        trailer && trailer.startsWith("http") ? trailer : "https://youtube.com",
-      thumbnail:
-        thumbnail ||
-        "https://bentizol.ru/assets/file-storage/images/blog-1_0.jpg",
-      nameRU: nameRU || "Не указано",
-      nameEN: nameEN || "Не указано",
-      movieId,
-    });
+  useEffect(() => {
+    getImageURL(obj);
+  }, []);
+
+  useEffect(() => {
+    getLike();
+  });
+
+  const getImageURL = (obj) => {
+    return pathname == "/movies" ? MOVIES_URL + obj.image.url : obj.image;
   };
 
-  const handleClick = (e, id) => {
-    // e.preventDefault();
-
-    // let like = !likeActiv;
-    // console.log(likeActiv);
-
-    postMovie(id);
-    // console.log();
-    // setlikeActiv(like);
+  const getLike = () => {
+    return Boolean(obj.SavedData.find((el) => el.movieId == obj.id));
   };
 
-  const handleDelete = () => {
-    handleDeleteMovie(movieId);
+  const addSaved = (obj) => {
+    obj.add_saved(obj);
+
+    obj.SavedData.push({ ...obj, movieId: obj.id });
+
+    setLike(!like);
+  };
+
+  const removeSaved = (id) => {
+    let inx = obj.SavedData.findIndex((el) => el.movieId == id);
+
+    obj.remove_saved(id);
+
+    obj.SavedData.splice(inx, 1);
+
+    setLike(!like);
   };
 
   return (
     <li className='card'>
       <figcaption className='card__info'>
-        <p className='card__title'>{nameRU}</p>
-        <div className='card__counter'>{duration}</div>
+        <p className='card__title'>{obj.nameRU}</p>
+        <div className='card__counter'>{obj.duration}</div>
         <div className='card__block'>
-          <button
-            className='card__button'
-            onClick={(e) => {
-              handleClick(e);
-            }}
-          >
-            {pathname == "/movies" ? (
-              <img
-                src={
-                  // likeActiv ?
-                  // cardLikeActiv :
-                  cardLike
-                }
-                alt='лайк'
-                className='card__like'
-              />
-            ) : (
-              <img
-                src={cardUnLike}
-                alt='дизлайк'
-                className='card__like'
-                onClick={handleDelete}
-              />
-            )}
-          </button>
+          {pathname == "/movies" && !getLike() ? (
+            <button className='card__button' onClick={() => addSaved(obj)}>
+              <img src={cardLike} alt='лайк' className='card__like' />
+            </button>
+          ) : pathname == "/movies" && getLike() ? (
+            <button
+              className='card__button'
+              onClick={() => removeSaved(obj.id)}
+            >
+              <img src={cardLikeActiv} alt='лайк' className='card__like' />
+            </button>
+          ) : pathname == "/saved-movies" ? (
+            <button
+              className='card__button'
+              onClick={() => obj.remove_saved(obj.movieId)}
+            >
+              <img src={cardUnLike} alt='лайк' className='card__like' />
+            </button>
+          ) : null}
         </div>
       </figcaption>
-      <img src={MOVIES_URL + image.url} alt={nameRU} className='card__image' />
+      <img
+        src={getImageURL(obj)}
+        alt={obj.nameRU}
+        className='card__image'
+        onClick={handleClick}
+        title={"trailerLink"}
+      />
     </li>
   );
 };

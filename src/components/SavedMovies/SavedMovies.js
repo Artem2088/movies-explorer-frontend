@@ -5,32 +5,12 @@ import MoviesHeader from "../MoviesHeader/MoviesHeader";
 import SavedCardList from "../Movies/MoviesCardList/SavedCardList";
 import "./SavedMovies.css";
 
-const SavedMovies = ({
-  checked,
-  shortMovieSave,
-  movie,
-  onChangeSearchValue,
-  searchValue,
-  handleGetMoviesAdd,
-  handleShortMovieAdd,
-  handleDeleteMovie,
-  handlePostMovie,
-}) => {
+const SavedMovies = ({}) => {
   return (
     <main className='savedMovies'>
       <MoviesHeader />
-      <SearchForm
-        searchValue={searchValue}
-        onChangeSearchValue={onChangeSearchValue}
-        handleGetMoviesAdd={handleGetMoviesAdd}
-        handleShortMovieAdd={handleShortMovieAdd}
-      />
-      <SavedCardList
-        shortMovieSave={shortMovieSave}
-        // items={checked ? shortMovie : movie}
-        handleDeleteMovie={handleDeleteMovie}
-        handlePostMovie={handlePostMovie}
-      />
+      <SearchForm />
+      <SavedCardList />
       <Footer />
     </main>
   );

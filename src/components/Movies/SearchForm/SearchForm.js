@@ -3,44 +3,33 @@ import "./SearchForm.css";
 import search from "../../../images/icon/icon-search.svg";
 import searchInput from "../../../images/icon/icon-search-input.svg";
 import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
-import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 
-const SearchForm = ({
-  handleGetMoviesAdd,
-  handleShortMovieAdd,
-  handleShortMovie,
-  handlePostMovie,
-  updateData,
-  handleGetAllMovies,
-}) => {
-  const [searchValue, setSearchValue] = useState("");
-  const pathname = useLocation();
+const SearchForm = ({ searchAction, short }) => {
+  const [searchText, setSearchText] = useState("");
+
+  useEffect(() => {
+    setSearchText(localStorage.getItem("search_text"));
+    searchAction(searchText);
+  }, []);
+
+  let search_text = "";
 
   const onChangeSearchValue = (event) => {
-    setSearchValue(event.target.value);
-    localStorage.setItem("searchValue", event.target.value);
-  };
-
-  const searchFormValue = () => {
-    if (pathname !== "/saved-movies") {
-      handleGetMoviesAdd(searchValue);
-    } else {
-      handlePostMovie(searchValue);
-    }
+    search_text = event.target.value;
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    searchFormValue();
+    searchAction(search_text);
+    localStorage.setItem("search_text", search_text);
   };
 
   return (
-    <form className='searchForm'>
+    <form className='searchForm' onSubmit={handleSubmit}>
       <div className='searchForm__field'>
         <img src={searchInput} alt='поиск' className='searchForm__inputIcon' />
         <input
-          value={searchValue}
           onChange={onChangeSearchValue}
           type='text'
           name='film'
@@ -48,18 +37,15 @@ const SearchForm = ({
           placeholder='Фильм'
           className='searchForm__input'
         />
-        <button
-          className='searchForm__block'
-          type='submit'
-          onClick={handleSubmit}
-        >
+        {/* {errValue ? (
+          <span className='searchForm__error'>Нужно ввести ключевое слово</span>
+        ) : (
+          ""
+        )} */}
+        <button className='searchForm__block' type='submit'>
           <img src={search} alt='поиск' className='searchForm__icon' />
         </button>
-        <FilterCheckbox
-          handleShortMovieAdd={handleShortMovieAdd}
-          handleShortMovie={handleShortMovie}
-          updateData={updateData}
-        />
+        <FilterCheckbox short={short} />
       </div>
     </form>
   );

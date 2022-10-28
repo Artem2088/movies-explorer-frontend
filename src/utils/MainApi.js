@@ -75,7 +75,7 @@ export const patchUserMe = async (name, email) => {
   return checkResponse(res);
 };
 
-export const getMovies = async (movie) => {
+export const getSaveMovies = async (callback) => {
   const res = await fetch(`${MAIN_API}/movies`, {
     method: "GET",
     headers: {
@@ -83,27 +83,39 @@ export const getMovies = async (movie) => {
       "Content-Type": "application/json",
     },
   });
-  return checkResponse(res);
+
+  let data = await res.json();
+  callback(data);
 };
 
-export const postMovie = async (item) => {
-  const res = await fetch(`${MAIN_API}/movies`, {
-    metod: "POST",
-    headers: {
-      authorization: `Bearer ${localStorage.getItem("jwt")}`,
-      "Content-Type": "application/json",
-    },
-  });
-  return checkResponse(res);
+export const postMovie = async (send_data, callback) => {
+  try {
+    const res = await fetch(`${MAIN_API}/movies`, {
+      method: "POST",
+      headers: {
+        authorization: `Bearer ${localStorage.getItem("jwt")}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(send_data),
+    });
+
+    let data = await res.json();
+    callback(data);
+  } catch (err) {
+    callback(err);
+  }
 };
 
-export const deleteMovie = async (movieId) => {
+export const deleteMovie = async (movieId, callback) => {
   const res = await fetch(`${MAIN_API}/movies/${movieId}`, {
-    metod: "DELETE",
+    method: "DELETE",
     headers: {
       authorization: `Bearer ${localStorage.getItem("jwt")}`,
       "Content-Type": "application/json",
     },
   });
-  return checkResponse(res);
+
+  let data = await res.json();
+
+  callback(data);
 };

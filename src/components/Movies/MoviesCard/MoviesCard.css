@@ -13,6 +13,15 @@
   width: 220px;
   height: auto;
   padding: 6px;
+
+}
+
+.card__image:hover {
+  cursor: pointer;
+}
+
+.card__image::before {
+  background: rgba(249, 249, 249, 1);
 }
 
 .card__info {

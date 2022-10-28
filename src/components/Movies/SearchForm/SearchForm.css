@@ -68,9 +68,11 @@
 
 .searchForm__error {
   position: absolute;
-  top: 100%;
-  left: 10%;
+  top: 40%;
+  left: 20%;
   font-size: 15px;
+  color: rgba(255, 104, 56, 1);
+  ;
 }
 
 @media screen and (max-width: 799px) {
