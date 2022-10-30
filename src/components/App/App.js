@@ -3,7 +3,6 @@ import { Routes, Route, useNavigate } from "react-router-dom";
 import Register from "../Register/Register";
 import Login from "../Login/Login";
 import Movies from "../Movies/Movies";
-import SavedMovies from "../SavedMovies/SavedMovies";
 import Profile from "../Profile/Profile";
 import Main from "../Main/Main";
 
@@ -16,6 +15,7 @@ import Modal from "../Modal/Modal";
 import * as MainApi from "../../utils/MainApi";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
+import { MESSAGE_ERR } from "../../utils/Constant";
 
 function App() {
   const navigate = useNavigate();
@@ -42,7 +42,7 @@ function App() {
           }
         })
         .catch((err) => {
-          setTitle("Что-то пошло не так! Попробуйте ещё раз.");
+          setTitle(MESSAGE_ERR.validAuthErr);
           setSpan(err);
           setModal(true);
         });
@@ -72,7 +72,7 @@ function App() {
         }
       })
       .catch((err) => {
-        setTitle("Что-то пошло не так! Попробуйте ещё раз.");
+        setTitle(MESSAGE_ERR.validAuthErr);
         setSpan(err);
         setisLoggedIn(false);
         setModal(true);
@@ -86,7 +86,7 @@ function App() {
       })
       .catch((err) => {
         console.error(err);
-        setTitle("Что-то пошло не так! Попробуйте ещё раз.");
+        setTitle(MESSAGE_ERR.validAuthErr);
         setSpan(err);
         setModal(true);
       });
@@ -98,6 +98,9 @@ function App() {
     localStorage.removeItem("jwt", token);
     localStorage.removeItem("search_result");
     localStorage.removeItem("short");
+    localStorage.removeItem("searchSave_result");
+    localStorage.removeItem("shortSave");
+    localStorage.removeItem("search_text");
     setisLoggedIn(false);
     navigate("/");
   };
@@ -123,7 +126,10 @@ function App() {
                 </>
               }
             />
-            <Route path='/movies' element={<Movies user={currentUser} />} />
+            <Route
+              path='/movies'
+              element={<Movies user={currentUser} modal={modal} />}
+            />
             <Route
               path='/saved-movies'
               element={<Movies user={currentUser} />}

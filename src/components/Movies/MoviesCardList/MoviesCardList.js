@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import { useState } from "react";
 import MoviesCard from "../MoviesCard/MoviesCard";
 import Preloader from "../Preloader/Preloader";
+import { MESSAGE_ERR } from "../../../utils/Constant";
 import "./MoviesCardList.css";
 
 const MoviesCardList = ({
@@ -43,7 +44,7 @@ const MoviesCardList = ({
               />
             ))
         ) : (
-          <h1>Ничего не найдено</h1>
+          <h1>{MESSAGE_ERR.foundErr}</h1>
         )}
       </ul>
       <div className='cardList__block'>

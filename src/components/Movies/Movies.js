@@ -8,11 +8,12 @@ import MoviesCardList from "./MoviesCardList/MoviesCardList";
 import { getMovies } from "../../utils/MoviesApi";
 import { getSaveMovies, postMovie, deleteMovie } from "../../utils/MainApi";
 import { MOVIES_URL } from "../../utils/Constant";
+import { MESSAGE_ERR } from "../../utils/Constant";
 
 let MoviesData = [];
 let SavedData = [];
 
-const Movies = ({ user }) => {
+const Movies = ({ user, modal }) => {
   const [Movies, setMovies] = useState(
     JSON.parse(localStorage.getItem("search_result")) || []
   );
@@ -58,10 +59,9 @@ const Movies = ({ user }) => {
         movieId: id,
       },
       (data) => {
-        // if (data) {
-        //   console.log(data);
-        //   setMovies(JSON.parse(localStorage.getItem("search_result")) || []);
-        // }
+        if (data) {
+          setMovies(JSON.parse(localStorage.getItem("search_result")) || []);
+        }
       }
     );
   };
@@ -143,10 +143,7 @@ const Movies = ({ user }) => {
 
         filterMovies(film);
       } else {
-        setErr(`
-        Во время запроса произошла ошибка. Возможно, проблема с соединением
-        или сервер недоступен. Подождите немного и попробуйте ещё раз
-        `);
+        setErr(MESSAGE_ERR.beatFilmErr);
       }
     });
   };
@@ -156,6 +153,7 @@ const Movies = ({ user }) => {
       <main className='movies'>
         <MoviesHeader />
         <SearchForm
+          modal={modal}
           searchAction={searchMovies}
           short={setShort}
           short_status={short}
