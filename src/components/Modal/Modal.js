@@ -1,8 +1,6 @@
-import React from "react";
+import { React, useState, useEffect } from "react";
 import "./Modal.css";
 import { AiOutlineClose } from "react-icons/ai";
-import { useState } from "react";
-import { useEffect } from "react";
 
 const Modal = ({ title, span, modal }) => {
   const [open, setOpen] = useState(false);

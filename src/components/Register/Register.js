@@ -1,8 +1,8 @@
-import React from "react";
+import { React, useState } from "react";
 import { useForm } from "react-hook-form";
 import "./Register.css";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { MESSAGE_ERR } from "../../utils/Constant";
 
 const Register = ({ onRegister }) => {
   const [name, setName] = useState("");
@@ -63,7 +63,7 @@ const Register = ({ onRegister }) => {
           />
           {errors?.Name && (
             <span className='register__error register__error_name'>
-              Что-то пошло не так...
+              {MESSAGE_ERR.spanErr}
             </span>
           )}
 
@@ -86,7 +86,7 @@ const Register = ({ onRegister }) => {
           />
           {errors?.Email && (
             <span className='register__error register__error_email'>
-              Что-то пошло не так...
+              {MESSAGE_ERR.spanErr}
             </span>
           )}
 
@@ -108,7 +108,7 @@ const Register = ({ onRegister }) => {
           />
           {errors?.password && (
             <span className='register__error register__error_password'>
-              Что-то пошло не так...
+              {MESSAGE_ERR.spanErr}
             </span>
           )}
         </fieldset>

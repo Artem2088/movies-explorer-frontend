@@ -1,10 +1,9 @@
-import React from "react";
-import Navigation from "../Navigation/Navigation";
+import { React, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
+import Navigation from "../Navigation/Navigation";
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
 import iconLogo from "../../images/icon/button-icon-main.svg";
 import "./MoviesHeader.css";
-import { useState } from "react";
 
 const MoviesHeader = () => {
   const [open, setOpen] = useState(false);

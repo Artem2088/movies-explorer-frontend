@@ -1,31 +1,42 @@
-import React, { useState } from "react";
+import { React, useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import "./SearchForm.css";
 import search from "../../../images/icon/icon-search.svg";
 import searchInput from "../../../images/icon/icon-search-input.svg";
 import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
 import Modal from "../../Modal/Modal";
 import { MESSAGE_ERR } from "../../../utils/Constant";
-import { useEffect } from "react";
 
-const SearchForm = ({ searchAction, short }) => {
+const SearchForm = ({ searchAction, short, short_status }) => {
   const [modal, setModal] = useState(false);
   const [title, setTitle] = useState("");
+  const [searchText, setSearchText] = useState("");
+  const { pathname } = useLocation();
 
-  let search_text = "";
+  useEffect(() => {
+    if (pathname == "/movies") {
+      setSearchText(localStorage.getItem("search_text"));
+    } else {
+      setSearchText("");
+    }
+  }, [pathname]);
 
   const onChangeSearchValue = (e) => {
-    search_text = e.target.value;
+    setSearchText(e.target.value);
   };
 
   const handleSubmit = (e) => {
-    if (search_text == "") {
+    if (searchText == "") {
       e.preventDefault();
       setTitle(MESSAGE_ERR.validInput);
       return setModal(true);
     }
     e.preventDefault();
-    searchAction(search_text);
-    localStorage.setItem("search_text", search_text);
+    searchAction(searchText);
+    if (pathname == "/movies") {
+      localStorage.setItem("search_text", searchText);
+    }
+    return setModal(false);
   };
 
   return (
@@ -40,6 +51,7 @@ const SearchForm = ({ searchAction, short }) => {
           id='film'
           placeholder='Фильм'
           className='searchForm__input'
+          value={searchText || ""}
         />
         <button
           className='searchForm__block'
@@ -50,7 +62,7 @@ const SearchForm = ({ searchAction, short }) => {
         >
           <img src={search} alt='поиск' className='searchForm__icon' />
         </button>
-        <FilterCheckbox short={short} />
+        <FilterCheckbox short={short} short_status={short_status} />
       </div>
     </form>
   );

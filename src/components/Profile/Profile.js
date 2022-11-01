@@ -1,13 +1,11 @@
-import React from "react";
+import { React, useState, useEffect, useContext } from "react";
 import { useForm } from "react-hook-form";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
-import { useState } from "react";
 import MoviesHeader from "../MoviesHeader/MoviesHeader";
 import * as MainApi from "../../utils/MainApi";
 import "./Profile.css";
-import { useContext } from "react";
-import { useEffect } from "react";
 import Modal from "../Modal/Modal";
+import { MESSAGE_ERR } from "../../utils/Constant";
 
 const Profile = ({ handleLogout }) => {
   const [visible, setVisible] = useState(false);
@@ -24,7 +22,7 @@ const Profile = ({ handleLogout }) => {
     register,
     handleSubmit,
     formState: { errors, isValid },
-  } = useForm({ mode: "onTouched" });
+  } = useForm({ mode: "onBlur" });
 
   useEffect(() => {
     setName(currentUser.name);
@@ -70,13 +68,13 @@ const Profile = ({ handleLogout }) => {
       .then(() => {
         setNewUser(newUser);
         setModal(true);
-        setTitle("Изменение данных прошло успешно!");
+        setTitle(MESSAGE_ERR.approvedProfile);
       })
       .catch((err) => {
         console.log(err);
         setNewUser([]);
         setModal(true);
-        setTitle("Что-то пошло не так...");
+        setTitle(MESSAGE_ERR.spanErr);
         setSpan(err);
       });
   };
@@ -134,7 +132,7 @@ const Profile = ({ handleLogout }) => {
         >
           {errorBtn ? (
             <span className='profile__error-span'>
-              При обновлении профиля произошла ошибка.
+              {MESSAGE_ERR.approvedProfileErr}
             </span>
           ) : (
             ""
@@ -154,11 +152,11 @@ const Profile = ({ handleLogout }) => {
           }`}
         >
           {errors?.name && (
-            <span className='profile__input-span'>Что-то пошло не так....</span>
+            <span className='profile__input-span'>{MESSAGE_ERR.spanErr}</span>
           )}
 
           {errors?.Email && (
-            <span className='profile__input-span'>Что-то пошло не так....</span>
+            <span className='profile__input-span'>{MESSAGE_ERR.spanErr}</span>
           )}
           <button
             className='button profile__button'

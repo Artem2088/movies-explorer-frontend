@@ -1,4 +1,5 @@
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 import Register from "../Register/Register";
 import Login from "../Login/Login";
@@ -10,7 +11,6 @@ import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 import PageNotFaund from "../PageNotFaund/PageNotFaund";
 import "./App.css";
-import { useEffect, useState } from "react";
 import Modal from "../Modal/Modal";
 import * as MainApi from "../../utils/MainApi";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
@@ -24,6 +24,7 @@ function App() {
   const [span, setSpan] = useState("");
   const [isLoggedIn, setisLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
+  const location = useLocation();
 
   // ----------------------useEffect----------------------
   useEffect(() => {
@@ -39,6 +40,7 @@ function App() {
         .then((res) => {
           if (res) {
             setisLoggedIn(true);
+            navigate(location.pathname);
           }
         })
         .catch((err) => {
@@ -51,8 +53,8 @@ function App() {
 
   // -----------------------------------Auth---------------------------------
 
-  const getUserInfo = () => {
-    MainApi.getUserInfo()
+  const getUserInfo = async () => {
+    await MainApi.getUserInfo()
       .then((user) => {
         setCurrentUser(user);
         setisLoggedIn(true);
@@ -99,7 +101,7 @@ function App() {
     localStorage.removeItem("search_result");
     localStorage.removeItem("short");
     localStorage.removeItem("searchSave_result");
-    localStorage.removeItem("shortSave");
+    localStorage.removeItem("saveShort");
     localStorage.removeItem("search_text");
     setisLoggedIn(false);
     navigate("/");
@@ -115,6 +117,7 @@ function App() {
               element={<Register onRegister={register} />}
             />
             <Route path='/signin' element={<Login onLogin={login} />} />
+
             <Route
               exact
               path='/'
@@ -128,23 +131,45 @@ function App() {
             />
             <Route
               path='/movies'
-              element={<Movies user={currentUser} modal={modal} />}
+              element={
+                <ProtectedRoute
+                  isLoggedIn={isLoggedIn}
+                  component={Movies}
+                  user={currentUser}
+                  modal={modal}
+                />
+              }
             />
             <Route
               path='/saved-movies'
-              element={<Movies user={currentUser} />}
+              element={
+                <ProtectedRoute
+                  isLoggedIn={isLoggedIn}
+                  component={Movies}
+                  user={currentUser}
+                />
+              }
             />
             <Route
               path='/profile'
               element={
-                <Profile
+                <ProtectedRoute
+                  component={Profile}
                   isLoggedIn={isLoggedIn}
                   modal={modal}
                   handleLogout={handleLogout}
                 />
               }
             />
-            <Route path='*' element={<PageNotFaund />} />
+            <Route
+              path='*'
+              element={
+                <ProtectedRoute
+                  component={PageNotFaund}
+                  isLoggedIn={isLoggedIn}
+                />
+              }
+            />
           </Routes>
           <Modal span={span} title={title} modal={modal} />
         </div>

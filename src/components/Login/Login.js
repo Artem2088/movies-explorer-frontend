@@ -1,10 +1,9 @@
-import React from "react";
+import { React, useState, useContext } from "react";
 import { useForm } from "react-hook-form";
 import "./Login.css";
 import { Link } from "react-router-dom";
-import { useState } from "react";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
-import { useContext } from "react";
+import { MESSAGE_ERR } from "../../utils/Constant";
 
 const Login = ({ onLogin }) => {
   const [email, setEmail] = useState("");
@@ -14,7 +13,7 @@ const Login = ({ onLogin }) => {
     register,
     handleSubmit,
     formState: { errors, isValid },
-  } = useForm({ mode: "onTouched" });
+  } = useForm({ mode: "onBlur" });
 
   const handleEmail = (e) => {
     setEmail(e.target.value);
@@ -64,7 +63,7 @@ const Login = ({ onLogin }) => {
           />
           {errors?.Email && (
             <span className='register__error login__error_email'>
-              Что-то пошло не так...
+              {MESSAGE_ERR.spanErr}
             </span>
           )}
           <label className='register__label login__label'>Пароль</label>
@@ -85,7 +84,7 @@ const Login = ({ onLogin }) => {
           />
           {errors?.password && (
             <span className='register__error login__error_password'>
-              Что-то пошло не так...
+              {MESSAGE_ERR.spanErr}
             </span>
           )}
         </fieldset>

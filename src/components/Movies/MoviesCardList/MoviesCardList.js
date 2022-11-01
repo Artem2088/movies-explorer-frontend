@@ -1,10 +1,10 @@
-import React from "react";
+import { React, useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { useState } from "react";
 import MoviesCard from "../MoviesCard/MoviesCard";
 import Preloader from "../Preloader/Preloader";
 import { MESSAGE_ERR } from "../../../utils/Constant";
 import "./MoviesCardList.css";
+import { LIMIT } from "../../../utils/Constant";
 
 const MoviesCardList = ({
   loading,
@@ -15,9 +15,19 @@ const MoviesCardList = ({
   SavedData,
 }) => {
   const { pathname } = useLocation();
-
   const [step, setStep] = useState(1);
-  let LIMIT = 7;
+  const [visible, setVisible] = useState(false);
+
+  const checkQtyItem = () => {
+    return step * LIMIT;
+  };
+
+  useEffect(() => {
+    if (pathname == "/movies" && items.length > checkQtyItem()) {
+      return setVisible(true);
+    }
+    setVisible(false);
+  }, [step]);
 
   if (err)
     return (
@@ -33,7 +43,7 @@ const MoviesCardList = ({
           <Preloader />
         ) : items.length ? (
           items
-            .slice(0, step * LIMIT)
+            .slice(0, checkQtyItem())
             .map((obj, i) => (
               <MoviesCard
                 key={i}
@@ -48,7 +58,7 @@ const MoviesCardList = ({
         )}
       </ul>
       <div className='cardList__block'>
-        {pathname == "/movies" && items.length > 7 ? (
+        {visible ? (
           <button className='cardList__plus' onClick={() => setStep(step + 1)}>
             Ещё
           </button>

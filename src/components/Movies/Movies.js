@@ -13,15 +13,20 @@ import { MESSAGE_ERR } from "../../utils/Constant";
 let MoviesData = [];
 let SavedData = [];
 
-const Movies = ({ user, modal }) => {
+const Movies = ({ modal }) => {
   const [Movies, setMovies] = useState(
     JSON.parse(localStorage.getItem("search_result")) || []
   );
-
   const [err, setErr] = useState(false);
   const [isLoading, setLoading] = useState(false);
-
   const [short, setShort] = useState(+localStorage.getItem("short"));
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    if (pathname != "/movies") {
+      return setShort(0);
+    }
+  }, [pathname]);
 
   const addSaved = (movie) => {
     const {
@@ -76,8 +81,6 @@ const Movies = ({ user, modal }) => {
     });
   };
 
-  const { pathname } = useLocation();
-
   useEffect(() => {
     getSaveMovies((data) => {
       SavedData = data;
@@ -100,7 +103,7 @@ const Movies = ({ user, modal }) => {
       localStorage.setItem("short", short ? 1 : 0);
     } else {
       localStorage.setItem("searchSave_result", JSON.stringify(result));
-      localStorage.setItem("shortSave", short ? 1 : 0);
+      localStorage.setItem("saveShort", short ? 1 : 0);
     }
 
     setMovies(result);

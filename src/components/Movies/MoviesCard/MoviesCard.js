@@ -10,9 +10,7 @@ const MoviesCard = (obj) => {
   const handleClick = () => {
     window.open(obj.trailerLink);
   };
-
   const { pathname } = useLocation();
-
   const [like, setLike] = useState(false);
 
   useEffect(() => {
@@ -33,19 +31,14 @@ const MoviesCard = (obj) => {
 
   const addSaved = (obj) => {
     obj.add_saved(obj);
-
     obj.SavedData.push({ ...obj, movieId: obj.id });
-
     setLike(!like);
   };
 
   const removeSaved = (id) => {
     let inx = obj.SavedData.findIndex((el) => el.movieId == id);
-
     obj.remove_saved(id);
-
     obj.SavedData.splice(inx, 1);
-
     setLike(!like);
   };
 
