@@ -1,35 +1,15 @@
-import { React, useState } from "react";
-import { useForm } from "react-hook-form";
+import { React, useEffect } from "react";
 import "./Register.css";
 import { Link } from "react-router-dom";
-import { MESSAGE_ERR } from "../../utils/Constant";
+import useValidation from "../../utils/useValidation";
 
 const Register = ({ onRegister }) => {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isValid },
-  } = useForm({ mode: "onTouched" });
+  const { handleChange, nameValues, errors, isValid, resetForm, handleSubmit } =
+    useValidation(onRegister);
 
-  const handleRegName = (e) => {
-    setName(e.target.value);
-  };
-
-  const handleRegEmail = (e) => {
-    setEmail(e.target.value);
-  };
-
-  const handleRegPass = (e) => {
-    setPassword(e.target.value);
-  };
-
-  const handleRegSubmit = (e) => {
-    e.preventDefault();
-    onRegister(name, email, password);
-  };
+  useEffect(() => {
+    resetForm();
+  }, [resetForm]);
 
   return (
     <div className='register'>
@@ -39,76 +19,62 @@ const Register = ({ onRegister }) => {
         </Link>
         <h2 className='register__title'>Добро пожаловать!</h2>
       </div>
-      <form
-        className='form'
-        onSubmit={handleSubmit(handleRegSubmit)}
-        noValidate
-      >
+      <form className='form' onSubmit={handleSubmit} noValidate>
         <fieldset className='fieldset register__fieldset'>
           <label className='register__label'>Имя</label>
           <input
-            {...register("Name", {
-              required: true,
-              minLength: "2",
-              maxLength: "40",
-            })}
             className='input register__input'
             id='name'
             type='text'
-            name='Name'
-            placeholder='Имя'
-            autoComplete='on'
-            onChange={handleRegName}
-            value={name}
+            name='name'
+            autoComplete='off'
+            onChange={handleChange}
+            value={nameValues.name || ""}
+            required
+            minLength='2'
+            maxLength='40'
           />
-          {errors?.Name && (
+          {errors?.name && (
             <span className='register__error register__error_name'>
-              {MESSAGE_ERR.spanErr}
+              {errors.name}
             </span>
           )}
 
           <label className='register__label'>E-mail</label>
           <input
-            {...register("Email", {
-              required: true,
-              minLength: "2",
-              maxLength: "40",
-              pattern: /^[A-Z0-9._%+-]+@[A-Z0-9-]+.+.[A-Z]{2,4}$/i,
-            })}
             className='input register__input'
             id='email'
             type='email'
-            name='Email'
-            placeholder='Email'
-            autoComplete='on'
-            onChange={handleRegEmail}
-            value={email}
+            name='email'
+            autoComplete='off'
+            onChange={handleChange}
+            value={nameValues.email || ""}
+            required
+            minLength='2'
+            maxLength='40'
           />
-          {errors?.Email && (
+          {errors?.email && (
             <span className='register__error register__error_email'>
-              {MESSAGE_ERR.spanErr}
+              {errors.email}
             </span>
           )}
 
           <label className='register__label'>Пароль</label>
           <input
-            {...register("password", {
-              required: true,
-              minLength: "2",
-              maxLength: "40",
-            })}
             className='input register__input'
             id='password'
             name='password'
             type='password'
-            placeholder='Пароль'
-            autoComplete='on'
-            onChange={handleRegPass}
-            value={password}
+            autoComplete='off'
+            onChange={handleChange}
+            value={nameValues.password || ""}
+            required
+            minLength='3'
+            maxLength='40'
           />
           {errors?.password && (
             <span className='register__error register__error_password'>
-              {MESSAGE_ERR.spanErr}
+              {errors.password}
             </span>
           )}
         </fieldset>
@@ -120,7 +86,7 @@ const Register = ({ onRegister }) => {
             : "button register__button-disable"
         }
         type='submit'
-        onClick={handleRegSubmit}
+        onClick={handleSubmit}
         disabled={!isValid}
       >
         <span className='register__span'> Зарегестрироваться</span>

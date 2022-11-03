@@ -1,32 +1,17 @@
-import { React, useState, useContext } from "react";
-import { useForm } from "react-hook-form";
+import { React, useContext, useEffect } from "react";
 import "./Login.css";
 import { Link } from "react-router-dom";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
-import { MESSAGE_ERR } from "../../utils/Constant";
+import useValidation from "../../utils/useValidation";
 
 const Login = ({ onLogin }) => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const currentUser = useContext(CurrentUserContext);
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isValid },
-  } = useForm({ mode: "onBlur" });
+  const { handleChange, nameValues, errors, isValid, resetForm, handleSubmit } =
+    useValidation(onLogin);
 
-  const handleEmail = (e) => {
-    setEmail(e.target.value);
-  };
-
-  const handlePassword = (e) => {
-    setPassword(e.target.value);
-  };
-
-  const handleLogSubmit = (e) => {
-    e.preventDefault();
-    onLogin(email, password);
-  };
+  useEffect(() => {
+    resetForm();
+  }, [resetForm]);
 
   return (
     <div className='login'>
@@ -38,53 +23,42 @@ const Login = ({ onLogin }) => {
           Рады видеть {currentUser.name}!
         </h2>
       </div>
-      <form
-        className='form'
-        onSubmit={handleSubmit(handleLogSubmit)}
-        noValidate
-      >
+      <form className='form' onSubmit={handleSubmit} noValidate>
         <fieldset className='fieldset login__fieldset'>
           <label className='register__label login__label'>E-mail</label>
           <input
-            {...register("Email", {
-              required: true,
-              minLength: "2",
-              maxLength: "40",
-              pattern: /^[A-Z0-9._%+-]+@[A-Z0-9-]+.+.[A-Z]{2,4}$/i,
-            })}
             className='input login__input'
-            onChange={handleEmail}
-            value={email}
+            onChange={handleChange}
+            value={nameValues?.email || ""}
             id='email'
-            name='Email'
-            placeholder='Email'
+            name='email'
             autoComplete='off'
             type='email'
+            minLength='2'
+            maxLength='40'
+            required
           />
-          {errors?.Email && (
+          {errors.email && (
             <span className='register__error login__error_email'>
-              {MESSAGE_ERR.spanErr}
+              {errors.email}
             </span>
           )}
           <label className='register__label login__label'>Пароль</label>
           <input
-            {...register("password", {
-              required: true,
-              minLength: "2",
-              maxLength: "40",
-            })}
             className='input login__input'
             id='password'
             name='password'
             type='password'
-            placeholder='Пароль'
-            autoComplete='on'
-            onChange={handlePassword}
-            value={password}
+            autoComplete='off'
+            onChange={handleChange}
+            value={nameValues?.password || ""}
+            required
+            minLength='3'
+            maxLength='40'
           />
           {errors?.password && (
             <span className='register__error login__error_password'>
-              {MESSAGE_ERR.spanErr}
+              {errors.password}
             </span>
           )}
         </fieldset>
@@ -94,7 +68,7 @@ const Login = ({ onLogin }) => {
           isValid ? "button login__button" : "button login__button-disable"
         }
         type='submit'
-        onClick={handleLogSubmit}
+        onClick={handleSubmit}
         disabled={!isValid}
       >
         <span className='login__span'>Войти</span>

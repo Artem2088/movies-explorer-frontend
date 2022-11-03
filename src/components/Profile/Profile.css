@@ -70,10 +70,29 @@
   padding-bottom: 16px;
 }
 
-.profile__input:last-child {
-  top: 169px;
+.profile__input-email {
+  width: 100%;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 11px;
+  line-height: 13px;
+  text-align: right;
+  color: rgba(0, 0, 0, 1);
+  margin: 0;
+  position: absolute;
+  right: 0;
+  top: 38%;
+  outline: none;
+  border: none;
+  border-bottom: 1px solid rgba(232, 232, 232, 1);
+  padding-bottom: 16px;
   border-bottom: none;
 }
+
+/* .profile__input:last-child {
+  top: 169px;
+  border-bottom: none;
+} */
 
 .profile__block {
   display: flex;
@@ -174,8 +193,22 @@
   color: rgba(255, 0, 76, 1);
   padding-bottom: 20px;
   position: absolute;
-  bottom: 100%;
-  left: 36%;
+  bottom: 72%;
+  left: 0%;
+}
+
+.profile__input-span_email {
+  display: block;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 11px;
+  line-height: 13px;
+  text-align: center;
+  color: rgba(255, 0, 76, 1);
+  padding-bottom: 20px;
+  position: absolute;
+  bottom: 40%;
+  left: 0%;
 }
 
 

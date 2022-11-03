@@ -1,4 +1,4 @@
-import { React, useEffect, useState } from "react";
+import { React, useEffect, useState, useContext } from "react";
 import { useLocation } from "react-router-dom";
 import "./Movies.css";
 import MoviesHeader from "../MoviesHeader/MoviesHeader";
@@ -13,7 +13,7 @@ import { MESSAGE_ERR } from "../../utils/Constant";
 let MoviesData = [];
 let SavedData = [];
 
-const Movies = ({ modal }) => {
+const Movies = ({ modal, isLoggedIn }) => {
   const [Movies, setMovies] = useState(
     JSON.parse(localStorage.getItem("search_result")) || []
   );
@@ -24,7 +24,15 @@ const Movies = ({ modal }) => {
 
   useEffect(() => {
     if (pathname != "/movies") {
+      localStorage.removeItem("search_result");
+      localStorage.removeItem("short");
       return setShort(0);
+    }
+  }, [pathname]);
+
+  useEffect(() => {
+    if (pathname == "/movies") {
+      return setShort(+localStorage.getItem("short"));
     }
   }, [pathname]);
 
@@ -96,17 +104,14 @@ const Movies = ({ modal }) => {
 
   const filterShort = (data = Movies) => {
     let result = [...data];
-
     if (short) result = data.filter((el) => el.duration < 40);
     if (pathname == "/movies") {
       localStorage.setItem("search_result", JSON.stringify(result));
       localStorage.setItem("short", short ? 1 : 0);
+      setMovies(result);
     } else {
-      localStorage.setItem("searchSave_result", JSON.stringify(result));
-      localStorage.setItem("saveShort", short ? 1 : 0);
+      setMovies(result);
     }
-
-    setMovies(result);
   };
 
   const filterMovies = (film) => {
@@ -114,24 +119,17 @@ const Movies = ({ modal }) => {
       let result = MoviesData.filter((el) =>
         el.nameRU.toLowerCase().includes(film.toLowerCase())
       );
-
       if (short) filterShort(result);
       else {
         localStorage.setItem("search_result", JSON.stringify(result));
-
         setMovies(result);
       }
-    } else if (pathname == "/saved-movies") {
+    } else {
       let result = SavedData.filter((el) =>
         el.nameRU.toLowerCase().includes(film.toLowerCase())
       );
-
       if (short) filterShort(result);
-      else {
-        localStorage.setItem("searchSave_result", JSON.stringify(result));
-
-        setMovies(result);
-      }
+      setMovies(result);
     }
   };
 
@@ -154,7 +152,7 @@ const Movies = ({ modal }) => {
   return (
     <>
       <main className='movies'>
-        <MoviesHeader />
+        <MoviesHeader logedIn={isLoggedIn} />
         <SearchForm
           modal={modal}
           searchAction={searchMovies}

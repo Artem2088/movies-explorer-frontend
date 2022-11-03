@@ -8,6 +8,7 @@ import Profile from "../Profile/Profile";
 import Main from "../Main/Main";
 
 import Header from "../Header/Header";
+import MoviesHeader from "../MoviesHeader/MoviesHeader";
 import Footer from "../Footer/Footer";
 import PageNotFaund from "../PageNotFaund/PageNotFaund";
 import "./App.css";
@@ -44,6 +45,7 @@ function App() {
           }
         })
         .catch((err) => {
+          handleLogout();
           setTitle(MESSAGE_ERR.validAuthErr);
           setSpan(err);
           setModal(true);
@@ -74,6 +76,7 @@ function App() {
         }
       })
       .catch((err) => {
+        handleLogout();
         setTitle(MESSAGE_ERR.validAuthErr);
         setSpan(err);
         setisLoggedIn(false);
@@ -84,13 +87,30 @@ function App() {
   const register = (name, email, password) => {
     MainApi.register(name, email, password)
       .then(() => {
-        navigate("/movies");
+        login(email, password);
       })
       .catch((err) => {
         console.error(err);
         setTitle(MESSAGE_ERR.validAuthErr);
         setSpan(err);
         setModal(true);
+      });
+  };
+
+  //-------------------------------------Profile-----------------------------------------
+  const updateProfile = (name, email) => {
+    MainApi.patchUserMe(name, email)
+      .then(() => {
+        setCurrentUser({ name, email });
+        setModal(true);
+        setTitle(MESSAGE_ERR.approvedProfile);
+      })
+      .catch((err) => {
+        console.log(err);
+        setCurrentUser({});
+        setModal(true);
+        setTitle(MESSAGE_ERR.spanErr);
+        setSpan(err);
       });
   };
 
@@ -123,7 +143,14 @@ function App() {
               path='/'
               element={
                 <>
-                  <Header />
+                  {isLoggedIn ? (
+                    <ProtectedRoute
+                      isLoggedIn={isLoggedIn}
+                      component={MoviesHeader}
+                    />
+                  ) : (
+                    <Header />
+                  )}
                   <Main />
                   <Footer />
                 </>
@@ -158,6 +185,7 @@ function App() {
                   isLoggedIn={isLoggedIn}
                   modal={modal}
                   handleLogout={handleLogout}
+                  updateProfile={updateProfile}
                 />
               }
             />

@@ -2,32 +2,39 @@ import { React, useState, useEffect, useContext } from "react";
 import { useForm } from "react-hook-form";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import MoviesHeader from "../MoviesHeader/MoviesHeader";
-import * as MainApi from "../../utils/MainApi";
 import "./Profile.css";
 import Modal from "../Modal/Modal";
 import { MESSAGE_ERR } from "../../utils/Constant";
+import useValidation from "../../utils/useValidation";
 
-const Profile = ({ handleLogout }) => {
+const Profile = ({ handleLogout, updateProfile }) => {
   const [visible, setVisible] = useState(false);
   const currentUser = useContext(CurrentUserContext);
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
+  // const [name, setName] = useState("");
+  // const [email, setEmail] = useState("");
   const [span, setSpan] = useState("");
-  const [newUser, setNewUser] = useState([]);
   const [changeUser, setChangeUser] = useState(false);
   const [errorBtn, setErrorBtn] = useState(false);
   const [modal, setModal] = useState("");
   const [title, setTitle] = useState("");
   const {
-    register,
+    handleChange,
+    nameValues,
+    errors,
+    isValid,
     handleSubmit,
-    formState: { errors, isValid },
-  } = useForm({ mode: "onBlur" });
+    setNameValues,
+  } = useValidation(updateProfile);
 
   useEffect(() => {
-    setName(currentUser.name);
-    setEmail(currentUser.email);
+    // setName(currentUser.name);
+    // setEmail(currentUser.email);
+    setNameValues(currentUser);
   }, [currentUser]);
+
+  useEffect(() => {
+    handleUser();
+  }, [nameValues]);
 
   const handleErrorBtm = () => {
     if (!changeUser) {
@@ -36,9 +43,10 @@ const Profile = ({ handleLogout }) => {
   };
 
   const handleUser = () => {
-    if (currentUser.name || currentUser.Email === name || email) {
-      setChangeUser(true);
+    if (currentUser === nameValues) {
+      return setChangeUser(false);
     }
+    setChangeUser(true);
   };
 
   const onClickHandleUser = () => {
@@ -48,36 +56,26 @@ const Profile = ({ handleLogout }) => {
     }
   };
 
-  const handleChangeName = (e) => {
-    handleUser();
-    setName(e.target.value);
+  const handleUpdateProfile = () => {
+    setChangeUser(false);
   };
 
-  const handleChangeEmail = (e) => {
-    handleUser();
-    setEmail(e.target.value);
-  };
+  // const handleChangeName = (e) => {
+  //   handleUser();
+  //   handleChange();
+  //   // setName(e.target.value);
+  // };
 
-  const handleProfSubmit = (e) => {
-    e.preventDefault();
-    updateProfile(name, email);
-  };
+  // const handleChangeEmail = (e) => {
+  //   handleUser();
+  //   handleChange();
+  //   // setEmail(e.target.value);
+  // };
 
-  const updateProfile = (name, email) => {
-    MainApi.patchUserMe(name, email)
-      .then(() => {
-        setNewUser(newUser);
-        setModal(true);
-        setTitle(MESSAGE_ERR.approvedProfile);
-      })
-      .catch((err) => {
-        console.log(err);
-        setNewUser([]);
-        setModal(true);
-        setTitle(MESSAGE_ERR.spanErr);
-        setSpan(err);
-      });
-  };
+  // const handleProfSubmit = (e) => {
+  //   e.preventDefault();
+  //   updateProfile(name, email);
+  // };
 
   return (
     <main className='profile'>
@@ -85,44 +83,41 @@ const Profile = ({ handleLogout }) => {
       <Modal modal={modal} title={title} span={span} />
       <div className='profile__container'>
         <h2 className='profile__title'>Привет, {currentUser.name}!</h2>
-        <form
-          className='form'
-          onSubmit={handleSubmit(handleProfSubmit)}
-          noValidate
-        >
+        <form className='form' onSubmit={handleSubmit}>
           <fieldset className='fieldset profile__fieldset'>
             <label className='profile__span'>Имя</label>
             <input
-              {...register("name", {
-                required: true,
-                minLength: "2",
-                maxLength: "40",
-              })}
               className='input profile__input'
               id='name'
               type='text'
               name='name'
               autoComplete='off'
-              onChange={handleChangeName}
-              value={name || ""}
+              onChange={handleChange}
+              value={nameValues?.name || ""}
+              required
+              minLength='2'
+              maxLength='40'
             />
+            {errors.name && (
+              <span className='profile__input-span'>{errors.name}</span>
+            )}
 
             <label className='profile__span_mail'>E-mail</label>
             <input
-              {...register("Email", {
-                required: true,
-                minLength: "2",
-                maxLength: "40",
-                pattern: /^[A-Z0-9._%+-]+@[A-Z0-9-]+.+.[A-Z]{2,4}$/i,
-              })}
-              className='input profile__input'
+              className='input profile__input-email'
+              onChange={handleChange}
+              value={nameValues?.email || ""}
               id='email'
-              type='email'
-              name='Email'
+              name='email'
               autoComplete='off'
-              onChange={handleChangeEmail}
-              value={email || ""}
+              type='email'
+              minLength='2'
+              maxLength='40'
+              required
             />
+            {errors.email && (
+              <span className='profile__input-span_email'>{errors.email}</span>
+            )}
           </fieldset>
         </form>
         <div
@@ -151,17 +146,11 @@ const Profile = ({ handleLogout }) => {
               : "profile__botom-container "
           }`}
         >
-          {errors?.name && (
-            <span className='profile__input-span'>{MESSAGE_ERR.spanErr}</span>
-          )}
-
-          {errors?.Email && (
-            <span className='profile__input-span'>{MESSAGE_ERR.spanErr}</span>
-          )}
           <button
             className='button profile__button'
-            onClick={handleProfSubmit}
-            disabled={isValid}
+            onClick={changeUser ? handleSubmit : handleUpdateProfile}
+            disabled={!isValid}
+            type='submit'
           >
             <span className='profile__button-span' modal={modal} title={title}>
               Сохранить
