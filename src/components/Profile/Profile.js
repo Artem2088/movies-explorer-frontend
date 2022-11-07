@@ -1,34 +1,25 @@
 import { React, useState, useEffect, useContext } from "react";
-import { useForm } from "react-hook-form";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import MoviesHeader from "../MoviesHeader/MoviesHeader";
 import "./Profile.css";
-import Modal from "../Modal/Modal";
 import { MESSAGE_ERR } from "../../utils/Constant";
-import useValidation from "../../utils/useValidation";
+import useValidation from "../../hooks/useValidation";
 
 const Profile = ({ handleLogout, updateProfile }) => {
   const [visible, setVisible] = useState(false);
   const currentUser = useContext(CurrentUserContext);
-  // const [name, setName] = useState("");
-  // const [email, setEmail] = useState("");
-  const [span, setSpan] = useState("");
   const [changeUser, setChangeUser] = useState(false);
   const [errorBtn, setErrorBtn] = useState(false);
-  const [modal, setModal] = useState("");
-  const [title, setTitle] = useState("");
   const {
     handleChange,
+    isValid,
     nameValues,
     errors,
-    isValid,
     handleSubmit,
     setNameValues,
   } = useValidation(updateProfile);
 
   useEffect(() => {
-    // setName(currentUser.name);
-    // setEmail(currentUser.email);
     setNameValues(currentUser);
   }, [currentUser]);
 
@@ -56,31 +47,13 @@ const Profile = ({ handleLogout, updateProfile }) => {
     }
   };
 
-  const handleUpdateProfile = () => {
-    setChangeUser(false);
-  };
-
-  // const handleChangeName = (e) => {
-  //   handleUser();
-  //   handleChange();
-  //   // setName(e.target.value);
-  // };
-
-  // const handleChangeEmail = (e) => {
-  //   handleUser();
-  //   handleChange();
-  //   // setEmail(e.target.value);
-  // };
-
-  // const handleProfSubmit = (e) => {
-  //   e.preventDefault();
-  //   updateProfile(name, email);
+  // const handleUpdateProfile = () => {
+  //   setChangeUser(false);
   // };
 
   return (
     <main className='profile'>
       <MoviesHeader />
-      <Modal modal={modal} title={title} span={span} />
       <div className='profile__container'>
         <h2 className='profile__title'>Привет, {currentUser.name}!</h2>
         <form className='form' onSubmit={handleSubmit}>
@@ -127,7 +100,7 @@ const Profile = ({ handleLogout, updateProfile }) => {
         >
           {errorBtn ? (
             <span className='profile__error-span'>
-              {MESSAGE_ERR.approvedProfileErr}
+              {MESSAGE_ERR.approvedProfileErr || errors}
             </span>
           ) : (
             ""
@@ -148,13 +121,11 @@ const Profile = ({ handleLogout, updateProfile }) => {
         >
           <button
             className='button profile__button'
-            onClick={changeUser ? handleSubmit : handleUpdateProfile}
+            onClick={changeUser ? handleSubmit : handleUser}
             disabled={!isValid}
             type='submit'
           >
-            <span className='profile__button-span' modal={modal} title={title}>
-              Сохранить
-            </span>
+            <span className='profile__button-span'>Сохранить</span>
           </button>
         </div>
       </div>

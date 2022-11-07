@@ -1,7 +1,7 @@
 import { React, useEffect } from "react";
 import "./Register.css";
 import { Link } from "react-router-dom";
-import useValidation from "../../utils/useValidation";
+import useValidation from "../../hooks/useValidation";
 
 const Register = ({ onRegister }) => {
   const { handleChange, nameValues, errors, isValid, resetForm, handleSubmit } =

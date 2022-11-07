@@ -22,7 +22,11 @@ const MoviesCard = (obj) => {
   });
 
   const getImageURL = (obj) => {
-    return pathname == "/movies" ? MOVIES_URL + obj.image.url : obj.image;
+    if (!obj.image.url) {
+      return obj.image;
+    }
+
+    return pathname === "/movies" ? MOVIES_URL + obj.image.url : obj.image;
   };
 
   const getLike = () => {
@@ -31,14 +35,28 @@ const MoviesCard = (obj) => {
 
   const addSaved = (obj) => {
     obj.add_saved(obj);
-    obj.SavedData.push({ ...obj, movieId: obj.id });
+    let newSavedFilmArray = [
+      ...obj.SavedData,
+      { ...obj, movieId: obj.id, image: MOVIES_URL + obj.image.url },
+    ];
+
+    localStorage.setItem(
+      "saved_movies_search_result",
+      JSON.stringify(newSavedFilmArray)
+    );
+    obj.setSavedData(newSavedFilmArray);
     setLike(!like);
   };
 
   const removeSaved = (id) => {
-    let inx = obj.SavedData.findIndex((el) => el.movieId == id);
-    obj.remove_saved(id);
-    obj.SavedData.splice(inx, 1);
+    let newSavedArray = obj.SavedData.filter(
+      (savedFilm) => savedFilm.movieId !== id
+    );
+
+    localStorage.setItem(
+      "saved_movies_search_result",
+      JSON.stringify(newSavedArray)
+    );
     setLike(!like);
   };
 

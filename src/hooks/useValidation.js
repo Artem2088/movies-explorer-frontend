@@ -8,9 +8,25 @@ const useValidation = (callback) => {
   const handleChange = (event) => {
     const target = event.target;
     const { name, value } = target;
+    let checkValidateEmail = false;
+
     setNameValues({ ...nameValues, [name]: value });
     setErrors({ ...errors, [name]: target.validationMessage });
-    setIsValid(target.closest("form").checkValidity());
+
+    if (name === "email") {
+      let validateEmail = value.split("@");
+      if (validateEmail.length === 2) {
+        let preparedEmail = validateEmail[1].toString().split(".");
+
+        if (preparedEmail.length === 2) {
+          checkValidateEmail =
+            (preparedEmail[0] === "mail" && preparedEmail[1] === "ru") ||
+            (preparedEmail[0] === "gmail" && preparedEmail[1] === "com");
+        }
+      }
+    }
+
+    setIsValid(target.closest("form").checkValidity() && checkValidateEmail);
   };
 
   const handleSubmit = (e) => {

@@ -14,7 +14,7 @@ const SearchForm = ({ searchAction, short, short_status }) => {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    if (pathname == "/movies") {
+    if (pathname === "/movies") {
       setSearchText(localStorage.getItem("search_text"));
     } else {
       setSearchText("");
@@ -26,14 +26,14 @@ const SearchForm = ({ searchAction, short, short_status }) => {
   };
 
   const handleSubmit = (e) => {
-    if (searchText == "") {
+    if (searchText === "") {
       e.preventDefault();
       setTitle(MESSAGE_ERR.validInput);
       return setModal(true);
     }
     e.preventDefault();
     searchAction(searchText);
-    if (pathname == "/movies") {
+    if (pathname === "/movies") {
       localStorage.setItem("search_text", searchText);
     }
     return setModal(false);

@@ -1,4 +1,10 @@
-import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
+import {
+  Routes,
+  Route,
+  useNavigate,
+  useLocation,
+  Navigate,
+} from "react-router-dom";
 import { useEffect, useState } from "react";
 
 import Register from "../Register/Register";
@@ -107,7 +113,7 @@ function App() {
       })
       .catch((err) => {
         console.log(err);
-        setCurrentUser({});
+        setCurrentUser(currentUser);
         setModal(true);
         setTitle(MESSAGE_ERR.spanErr);
         setSpan(err);
@@ -119,10 +125,13 @@ function App() {
   const handleLogout = (token) => {
     localStorage.removeItem("jwt", token);
     localStorage.removeItem("search_result");
+    localStorage.removeItem("saved_movies_search_result");
     localStorage.removeItem("short");
+    localStorage.removeItem("saved_short");
     localStorage.removeItem("searchSave_result");
     localStorage.removeItem("saveShort");
     localStorage.removeItem("search_text");
+    localStorage.removeItem("saved_movies_search_text");
     setisLoggedIn(false);
     navigate("/");
   };
@@ -134,9 +143,20 @@ function App() {
           <Routes>
             <Route
               path='/signup'
-              element={<Register onRegister={register} />}
+              element={
+                !isLoggedIn ? (
+                  <Register onRegister={register} />
+                ) : (
+                  <Navigate to='/' />
+                )
+              }
             />
-            <Route path='/signin' element={<Login onLogin={login} />} />
+            <Route
+              path='/signin'
+              element={
+                !isLoggedIn ? <Login onLogin={login} /> : <Navigate to='/' />
+              }
+            />
 
             <Route
               exact

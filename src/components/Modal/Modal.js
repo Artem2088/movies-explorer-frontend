@@ -15,7 +15,7 @@ const Modal = ({ title, span, modal }) => {
 
   return (
     <div className={`${open ? "modal " : "modal-hidden "}`}>
-      <div className='modal__overlay'>
+      <div className='modal__overlay' onClick={() => setOpen(false)}>
         <button onClick={() => setOpen(false)} className='button modal__close'>
           <AiOutlineClose size={44} />
         </button>

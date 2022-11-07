@@ -13,21 +13,36 @@ const MoviesCardList = ({
   add_saved,
   remove_saved,
   SavedData,
+  setSavedData,
 }) => {
   const { pathname } = useLocation();
   const [step, setStep] = useState(1);
   const [visible, setVisible] = useState(false);
+  const [isSearchResult, setSearchResult] = useState(false);
 
   const checkQtyItem = () => {
+    if (pathname === "/saved-movies") {
+      return items.length;
+    }
+
     return step * LIMIT;
   };
 
   useEffect(() => {
-    if (pathname == "/movies" && items.length > checkQtyItem()) {
+    if (pathname === "/movies" && items.length > checkQtyItem()) {
       return setVisible(true);
     }
+
+    if (pathname === "/movies") {
+      setSearchResult(!!localStorage.getItem("search_text"));
+    }
+
+    if (pathname === "/saved-movies") {
+      setSearchResult(!!localStorage.getItem("saved_movies_search_text"));
+    }
+
     setVisible(false);
-  }, [step]);
+  }, [step, isSearchResult, pathname]);
 
   if (err)
     return (
@@ -51,10 +66,13 @@ const MoviesCardList = ({
                 add_saved={add_saved}
                 remove_saved={remove_saved}
                 SavedData={SavedData}
+                setSavedData={setSavedData}
               />
             ))
-        ) : (
+        ) : isSearchResult ? (
           <h1>{MESSAGE_ERR.foundErr}</h1>
+        ) : (
+          ""
         )}
       </ul>
       <div className='cardList__block'>
