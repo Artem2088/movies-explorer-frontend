@@ -15,9 +15,9 @@ const SearchForm = ({ searchAction, short, short_status }) => {
 
   useEffect(() => {
     if (pathname === "/movies") {
-      setSearchText(localStorage.getItem("search_text"));
+      setSearchText(localStorage.getItem("search_text") || null);
     } else {
-      setSearchText("");
+      setSearchText(null);
     }
   }, [pathname]);
 
@@ -26,17 +26,18 @@ const SearchForm = ({ searchAction, short, short_status }) => {
   };
 
   const handleSubmit = (e) => {
-    if (searchText === "") {
+    if (searchText == null) {
       e.preventDefault();
       setTitle(MESSAGE_ERR.validInput);
       return setModal(true);
+    } else {
+      e.preventDefault();
+      searchAction(searchText);
+      if (pathname === "/movies") {
+        localStorage.setItem("search_text", searchText);
+      }
+      return setModal(false);
     }
-    e.preventDefault();
-    searchAction(searchText);
-    if (pathname === "/movies") {
-      localStorage.setItem("search_text", searchText);
-    }
-    return setModal(false);
   };
 
   return (

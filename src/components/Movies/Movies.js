@@ -10,21 +10,19 @@ import { getSaveMovies, postMovie, deleteMovie } from "../../utils/MainApi";
 import { MOVIES_URL } from "../../utils/Constant";
 import { MESSAGE_ERR } from "../../utils/Constant";
 
-let MoviesData = [];
+let moviesData = [];
 
 const Movies = ({ modal, isLoggedIn }) => {
   const [Movies, setMovies] = useState(
     JSON.parse(localStorage.getItem("search_result")) || []
   );
-  const [savedMovies, setSavedMovies] = useState(
-    JSON.parse(localStorage.getItem("saved_movies_search_result")) || []
-  );
+  const [savedMovies, setSavedMovies] = useState([]);
   const [err, setErr] = useState(false);
   const [isLoading, setLoading] = useState(false);
-  const [short, setShort] = useState(parseInt(localStorage.getItem("short")));
-  const [savedShort, setSavedShort] = useState(
-    parseInt(localStorage.getItem("saved_short"))
+  const [short, setShort] = useState(
+    parseInt(localStorage.getItem("short")) || 0
   );
+  const [savedShort, setSavedShort] = useState(0);
   const { pathname } = useLocation();
   const [step, setStep] = useState(1);
 
@@ -89,44 +87,22 @@ const Movies = ({ modal, isLoggedIn }) => {
         setMovies(saved_movies);
 
         setSavedMovies(saved_movies);
-        localStorage.setItem(
-          "saved_movies_search_result",
-          JSON.stringify(saved_movies)
-        );
       }
     });
   };
 
-  useEffect(() => {
+  const getSaveMoviesAll = () => {
     getSaveMovies((data) => {
-      if (pathname === "/saved-movies") {
-        let savedMovies =
-          JSON.parse(localStorage.getItem("saved_movies_search_result")) || [];
-
-        if (!savedMovies.length) {
-          setMovies([]);
-          setSavedMovies([]);
-        } else {
-          setMovies(
-            JSON.parse(localStorage.getItem("saved_movies_search_result")) || []
-          );
-          setSavedMovies(
-            JSON.parse(localStorage.getItem("saved_movies_search_result")) || []
-          );
-        }
+      if (!data.length) {
+        setSavedMovies([]);
       }
-
-      if (pathname === "/movies") {
-        let movies = JSON.parse(localStorage.getItem("search_result") || []);
-
-        if (!movies.length) {
-          setMovies([]);
-        } else {
-          setMovies(movies);
-        }
-      }
+      setSavedMovies(data);
     });
-  }, [pathname]);
+  };
+
+  useEffect(() => {
+    getSaveMoviesAll();
+  }, []);
 
   useEffect(() => {
     filterShort();
@@ -146,27 +122,14 @@ const Movies = ({ modal, isLoggedIn }) => {
     } else {
       if (savedShort) {
         result = savedMovies.filter((el) => el.duration < 40);
-
-        localStorage.setItem(
-          "saved_movies_search_result",
-          JSON.stringify(result)
-        );
-        setMovies(result);
-      } else {
-        localStorage.setItem(
-          "saved_movies_search_result",
-          JSON.stringify(savedMovies)
-        );
         setMovies(result);
       }
-
-      localStorage.setItem("saved_short", savedShort ? 1 : 0);
     }
   };
 
   const filterMovies = (film) => {
     if (pathname === "/movies") {
-      let result = MoviesData.filter((el) =>
+      let result = moviesData.filter((el) =>
         el.nameRU.toLowerCase().includes(film.toLowerCase())
       );
 
@@ -185,10 +148,6 @@ const Movies = ({ modal, isLoggedIn }) => {
         filterShort(result);
       } else {
         setMovies(result);
-        localStorage.setItem(
-          "saved_movies_search_result",
-          JSON.stringify(result)
-        );
       }
     }
   };
@@ -200,13 +159,15 @@ const Movies = ({ modal, isLoggedIn }) => {
       setLoading(false);
 
       if (data.length) {
-        MoviesData = [...data];
+        moviesData = [...data];
 
         filterMovies(film);
       } else {
-        setErr(MESSAGE_ERR.beatFilmErr);
+        return setErr(MESSAGE_ERR.beatFilmErr);
       }
     });
+
+    setStep(1);
   };
 
   return (
@@ -220,13 +181,15 @@ const Movies = ({ modal, isLoggedIn }) => {
           short_status={pathname === "/movies" ? short : savedShort}
         />
         <MoviesCardList
-          items={Movies}
+          items={pathname === "/movies" ? Movies : savedMovies}
           loading={isLoading}
           err={err}
           add_saved={addSaved}
           remove_saved={removeSaved}
-          SavedData={savedMovies}
+          savedData={savedMovies}
           setSavedData={setSavedMovies}
+          step={step}
+          setStep={setStep}
         />
         <Footer />
       </main>

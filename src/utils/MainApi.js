@@ -76,16 +76,20 @@ export const patchUserMe = async (name, email) => {
 };
 
 export const getSaveMovies = async (callback) => {
-  const res = await fetch(`${MAIN_API}/movies`, {
-    method: "GET",
-    headers: {
-      authorization: `Bearer ${localStorage.getItem("jwt")}`,
-      "Content-Type": "application/json",
-    },
-  });
+  try {
+    const res = await fetch(`${MAIN_API}/movies`, {
+      method: "GET",
+      headers: {
+        authorization: `Bearer ${localStorage.getItem("jwt")}`,
+        "Content-Type": "application/json",
+      },
+    });
 
-  let data = await res.json();
-  callback(data);
+    let data = await res.json();
+    callback(data);
+  } catch (err) {
+    callback(err);
+  }
 };
 
 export const postMovie = async (send_data, callback) => {

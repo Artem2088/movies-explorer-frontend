@@ -29,7 +29,7 @@ const Login = ({ onLogin }) => {
           <input
             className='input login__input'
             onChange={handleChange}
-            value={nameValues?.email || ""}
+            value={nameValues.email || ""}
             id='email'
             name='email'
             autoComplete='off'
@@ -51,7 +51,7 @@ const Login = ({ onLogin }) => {
             type='password'
             autoComplete='off'
             onChange={handleChange}
-            value={nameValues?.password || ""}
+            value={nameValues.password || ""}
             required
             minLength='3'
             maxLength='40'

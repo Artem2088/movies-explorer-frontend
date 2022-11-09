@@ -30,33 +30,22 @@ const MoviesCard = (obj) => {
   };
 
   const getLike = () => {
-    return Boolean(obj.SavedData.find((el) => el.movieId == obj.id));
+    return Boolean(obj.savedData.find((el) => el.movieId == obj.id));
   };
 
   const addSaved = (obj) => {
     obj.add_saved(obj);
     let newSavedFilmArray = [
-      ...obj.SavedData,
+      ...obj.savedData,
       { ...obj, movieId: obj.id, image: MOVIES_URL + obj.image.url },
     ];
-
-    localStorage.setItem(
-      "saved_movies_search_result",
-      JSON.stringify(newSavedFilmArray)
-    );
     obj.setSavedData(newSavedFilmArray);
     setLike(!like);
   };
 
   const removeSaved = (id) => {
-    let newSavedArray = obj.SavedData.filter(
-      (savedFilm) => savedFilm.movieId !== id
-    );
+    obj.savedData.filter((savedFilm) => savedFilm.movieId !== id);
 
-    localStorage.setItem(
-      "saved_movies_search_result",
-      JSON.stringify(newSavedArray)
-    );
     setLike(!like);
   };
 

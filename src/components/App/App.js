@@ -29,7 +29,7 @@ function App() {
   const [modal, setModal] = useState(false);
   const [title, setTitle] = useState("");
   const [span, setSpan] = useState("");
-  const [isLoggedIn, setisLoggedIn] = useState(false);
+  const [isLoggedIn, setLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
   const location = useLocation();
 
@@ -46,7 +46,7 @@ function App() {
       MainApi.checkToken(jwt)
         .then((res) => {
           if (res) {
-            setisLoggedIn(true);
+            setLoggedIn(true);
             navigate(location.pathname);
           }
         })
@@ -56,6 +56,9 @@ function App() {
           setSpan(err);
           setModal(true);
         });
+    } else {
+      navigate("/");
+      handleLogout();
     }
   }, []);
 
@@ -65,7 +68,7 @@ function App() {
     await MainApi.getUserInfo()
       .then((user) => {
         setCurrentUser(user);
-        setisLoggedIn(true);
+        setLoggedIn(true);
       })
       .catch((error) => {
         console.error(error);
@@ -78,14 +81,14 @@ function App() {
         if (res.token) {
           localStorage.setItem("jwt", res.token);
           navigate("/movies");
-          setisLoggedIn(true);
+          setLoggedIn(true);
         }
       })
       .catch((err) => {
         handleLogout();
         setTitle(MESSAGE_ERR.validAuthErr);
         setSpan(err);
-        setisLoggedIn(false);
+        setLoggedIn(false);
         setModal(true);
       });
   };
@@ -122,17 +125,9 @@ function App() {
 
   // --------------------------------------Logout----------------------------------------
 
-  const handleLogout = (token) => {
-    localStorage.removeItem("jwt", token);
-    localStorage.removeItem("search_result");
-    localStorage.removeItem("saved_movies_search_result");
-    localStorage.removeItem("short");
-    localStorage.removeItem("saved_short");
-    localStorage.removeItem("searchSave_result");
-    localStorage.removeItem("saveShort");
-    localStorage.removeItem("search_text");
-    localStorage.removeItem("saved_movies_search_text");
-    setisLoggedIn(false);
+  const handleLogout = () => {
+    localStorage.clear();
+    setLoggedIn(false);
     navigate("/");
   };
   //  ---------------------------------------------------------------------------------------

@@ -12,11 +12,12 @@ const MoviesCardList = ({
   err,
   add_saved,
   remove_saved,
-  SavedData,
+  savedData,
   setSavedData,
+  step,
+  setStep,
 }) => {
   const { pathname } = useLocation();
-  const [step, setStep] = useState(1);
   const [visible, setVisible] = useState(false);
   const [isSearchResult, setSearchResult] = useState(false);
 
@@ -36,13 +37,8 @@ const MoviesCardList = ({
     if (pathname === "/movies") {
       setSearchResult(!!localStorage.getItem("search_text"));
     }
-
-    if (pathname === "/saved-movies") {
-      setSearchResult(!!localStorage.getItem("saved_movies_search_text"));
-    }
-
     setVisible(false);
-  }, [step, isSearchResult, pathname]);
+  }, [step, isSearchResult, items]);
 
   if (err)
     return (
@@ -59,13 +55,13 @@ const MoviesCardList = ({
         ) : items.length ? (
           items
             .slice(0, checkQtyItem())
-            .map((obj, i) => (
+            .map((obj) => (
               <MoviesCard
-                key={i}
+                key={pathname === "/movies" ? items.id : obj.movieId}
                 {...obj}
                 add_saved={add_saved}
                 remove_saved={remove_saved}
-                SavedData={SavedData}
+                savedData={savedData}
                 setSavedData={setSavedData}
               />
             ))
