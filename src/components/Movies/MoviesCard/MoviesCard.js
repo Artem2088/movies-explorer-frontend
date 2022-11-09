@@ -19,7 +19,7 @@ const MoviesCard = (obj) => {
 
   useEffect(() => {
     getLike();
-  });
+  }, []);
 
   const getImageURL = (obj) => {
     if (!obj.image.url) {
@@ -44,8 +44,10 @@ const MoviesCard = (obj) => {
   };
 
   const removeSaved = (id) => {
-    obj.savedData.filter((savedFilm) => savedFilm.movieId !== id);
-
+    let newSavedArray = obj.savedData.filter(
+      (savedFilm) => savedFilm.movieId !== id
+    );
+    obj.setSavedData(newSavedArray);
     setLike(!like);
   };
 

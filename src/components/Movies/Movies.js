@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useLocation } from "react-router-dom";
 import "./Movies.css";
 import MoviesHeader from "../MoviesHeader/MoviesHeader";
@@ -9,6 +9,7 @@ import { getMovies } from "../../utils/MoviesApi";
 import { getSaveMovies, postMovie, deleteMovie } from "../../utils/MainApi";
 import { MOVIES_URL } from "../../utils/Constant";
 import { MESSAGE_ERR } from "../../utils/Constant";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
 let moviesData = [];
 
@@ -25,9 +26,11 @@ const Movies = ({ modal, isLoggedIn }) => {
   const [savedShort, setSavedShort] = useState(0);
   const { pathname } = useLocation();
   const [step, setStep] = useState(1);
+  const currentUser = useContext(CurrentUserContext);
 
   useEffect(() => {
     if (pathname === "/movies") {
+      setMovies(JSON.parse(localStorage.getItem("search_result")) || []);
       return setShort(parseInt(localStorage.getItem("short")));
     }
 
@@ -82,7 +85,8 @@ const Movies = ({ modal, isLoggedIn }) => {
   const removeSaved = (movieId) => {
     deleteMovie(movieId, (data) => {
       if (data.status?.acknowledged) {
-        let saved_movies = [...Movies];
+        // let saved_movies = [...Movies];
+        let saved_movies = [...savedMovies];
         saved_movies = saved_movies.filter((el) => el.movieId != movieId);
         setMovies(saved_movies);
 
@@ -96,7 +100,11 @@ const Movies = ({ modal, isLoggedIn }) => {
       if (!data.length) {
         setSavedMovies([]);
       }
-      setSavedMovies(data);
+      let saved_movies = [...savedMovies];
+      saved_movies = saved_movies.filter((el) => el.owner === currentUser);
+
+      setSavedMovies(saved_movies);
+      // setSavedMovies(data);
     });
   };
 
@@ -139,11 +147,11 @@ const Movies = ({ modal, isLoggedIn }) => {
         localStorage.setItem("search_result", JSON.stringify(result));
         setMovies(result);
       }
-    } else {
+    }
+    if (pathname === "/saved-movies") {
       let result = savedMovies.filter((el) =>
         el.nameRU.toLowerCase().includes(film.toLowerCase())
       );
-
       if (savedShort) {
         filterShort(result);
       } else {
@@ -166,7 +174,6 @@ const Movies = ({ modal, isLoggedIn }) => {
         return setErr(MESSAGE_ERR.beatFilmErr);
       }
     });
-
     setStep(1);
   };
 
@@ -176,7 +183,9 @@ const Movies = ({ modal, isLoggedIn }) => {
         <MoviesHeader logedIn={isLoggedIn} />
         <SearchForm
           modal={modal}
-          searchAction={searchMovies}
+          searchAction={
+            pathname === "/movies" ? searchMovies : getSaveMoviesAll
+          }
           short={pathname === "/movies" ? setShort : setSavedShort}
           short_status={pathname === "/movies" ? short : savedShort}
         />

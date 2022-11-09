@@ -37,6 +37,10 @@ const MoviesCardList = ({
     if (pathname === "/movies") {
       setSearchResult(!!localStorage.getItem("search_text"));
     }
+
+    if (pathname === "/saved-movies") {
+      setSearchResult(false);
+    }
     setVisible(false);
   }, [step, isSearchResult, items]);
 
@@ -57,7 +61,7 @@ const MoviesCardList = ({
             .slice(0, checkQtyItem())
             .map((obj) => (
               <MoviesCard
-                key={pathname === "/movies" ? items.id : obj.movieId}
+                key={pathname === "/movies" ? obj.id : obj.movieId}
                 {...obj}
                 add_saved={add_saved}
                 remove_saved={remove_saved}

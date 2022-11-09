@@ -47,10 +47,6 @@ const Profile = ({ handleLogout, updateProfile }) => {
     }
   };
 
-  // const handleUpdateProfile = () => {
-  //   setChangeUser(false);
-  // };
-
   return (
     <main className='profile'>
       <MoviesHeader />
