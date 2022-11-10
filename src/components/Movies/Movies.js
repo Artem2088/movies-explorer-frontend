@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import "./Movies.css";
 import MoviesHeader from "../MoviesHeader/MoviesHeader";
@@ -9,11 +9,11 @@ import { getMovies } from "../../utils/MoviesApi";
 import { getSaveMovies, postMovie, deleteMovie } from "../../utils/MainApi";
 import { MOVIES_URL } from "../../utils/Constant";
 import { MESSAGE_ERR } from "../../utils/Constant";
-import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
 let moviesData = [];
+let savedMoviesData = [];
 
-const Movies = ({ modal, isLoggedIn }) => {
+const Movies = ({ modal, isLoggedIn, user: currentUser }) => {
   const [Movies, setMovies] = useState(
     JSON.parse(localStorage.getItem("search_result")) || []
   );
@@ -26,16 +26,11 @@ const Movies = ({ modal, isLoggedIn }) => {
   const [savedShort, setSavedShort] = useState(0);
   const { pathname } = useLocation();
   const [step, setStep] = useState(1);
-  const currentUser = useContext(CurrentUserContext);
 
   useEffect(() => {
     if (pathname === "/movies") {
       setMovies(JSON.parse(localStorage.getItem("search_result")) || []);
       return setShort(parseInt(localStorage.getItem("short")));
-    }
-
-    if (pathname === "/saved-movies") {
-      return setSavedShort(0);
     }
   }, [pathname]);
 
@@ -85,53 +80,84 @@ const Movies = ({ modal, isLoggedIn }) => {
   const removeSaved = (movieId) => {
     deleteMovie(movieId, (data) => {
       if (data.status?.acknowledged) {
-        // let saved_movies = [...Movies];
         let saved_movies = [...savedMovies];
         saved_movies = saved_movies.filter((el) => el.movieId != movieId);
-        setMovies(saved_movies);
 
         setSavedMovies(saved_movies);
       }
     });
   };
 
-  const getSaveMoviesAll = () => {
+  const getSaveMoviesAll = (film) => {
+    setLoading(true);
+
     getSaveMovies((data) => {
+      setLoading(false);
+
       if (!data.length) {
         setSavedMovies([]);
-      }
-      let saved_movies = [...savedMovies];
-      saved_movies = saved_movies.filter((el) => el.owner === currentUser);
+      } else {
+        let unequalSavedMovies = data.filter(
+          (movie) => currentUser._id === movie.owner
+        );
 
-      setSavedMovies(saved_movies);
-      // setSavedMovies(data);
+        setSavedMovies(unequalSavedMovies);
+        savedMoviesData = [...unequalSavedMovies];
+
+        if (film) {
+          filterMovies(film);
+        }
+      }
     });
   };
 
   useEffect(() => {
     getSaveMoviesAll();
-  }, []);
+  }, [currentUser]);
 
   useEffect(() => {
     filterShort();
   }, [short, savedShort]);
 
-  const filterShort = (data = Movies) => {
+  const filterShort = (
+    data = pathname === "/movies" ? moviesData : savedMovies
+  ) => {
     let result = [...data];
 
     if (pathname === "/movies") {
-      if (short) {
-        result = data.filter((el) => el.duration < 40);
+      if (!result.length) {
+        result = [
+          ...(JSON.parse(localStorage.getItem("search_result")) || Movies),
+        ];
       }
 
-      localStorage.setItem("search_result", JSON.stringify(result));
-      localStorage.setItem("short", short ? 1 : 0);
-      setMovies(result);
-    } else {
-      if (savedShort) {
-        result = savedMovies.filter((el) => el.duration < 40);
+      if (!moviesData.length) {
+        moviesData = [...result];
+      }
+
+      if (short) {
+        result = moviesData.filter((film) => film.duration < 40);
+      }
+
+      if (localStorage.getItem("search_text") && result.length) {
+        localStorage.setItem("search_result", JSON.stringify(result));
+      }
+
+      localStorage.setItem("short", short ? "1" : "0");
+
+      if (localStorage.getItem("search_text")) {
         setMovies(result);
       }
+    }
+
+    if (pathname === "/saved-movies") {
+      if (savedShort) {
+        result = savedMoviesData.filter((film) => film.duration < 40);
+      } else {
+        result = [...savedMoviesData];
+      }
+
+      setSavedMovies(result);
     }
   };
 
@@ -148,14 +174,16 @@ const Movies = ({ modal, isLoggedIn }) => {
         setMovies(result);
       }
     }
+
     if (pathname === "/saved-movies") {
-      let result = savedMovies.filter((el) =>
+      let result = savedMoviesData.filter((el) =>
         el.nameRU.toLowerCase().includes(film.toLowerCase())
       );
+
       if (savedShort) {
         filterShort(result);
       } else {
-        setMovies(result);
+        setSavedMovies(result);
       }
     }
   };
@@ -174,6 +202,7 @@ const Movies = ({ modal, isLoggedIn }) => {
         return setErr(MESSAGE_ERR.beatFilmErr);
       }
     });
+
     setStep(1);
   };
 
@@ -193,8 +222,8 @@ const Movies = ({ modal, isLoggedIn }) => {
           items={pathname === "/movies" ? Movies : savedMovies}
           loading={isLoading}
           err={err}
-          add_saved={addSaved}
-          remove_saved={removeSaved}
+          addSaved={addSaved}
+          removeSaved={removeSaved}
           savedData={savedMovies}
           setSavedData={setSavedMovies}
           step={step}

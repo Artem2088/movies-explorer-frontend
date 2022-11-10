@@ -34,7 +34,7 @@ const MoviesCard = (obj) => {
   };
 
   const addSaved = (obj) => {
-    obj.add_saved(obj);
+    obj.addSaved(obj);
     let newSavedFilmArray = [
       ...obj.savedData,
       { ...obj, movieId: obj.id, image: MOVIES_URL + obj.image.url },
@@ -47,6 +47,8 @@ const MoviesCard = (obj) => {
     let newSavedArray = obj.savedData.filter(
       (savedFilm) => savedFilm.movieId !== id
     );
+
+    obj.removeSaved(id);
     obj.setSavedData(newSavedArray);
     setLike(!like);
   };
@@ -71,7 +73,7 @@ const MoviesCard = (obj) => {
           ) : pathname == "/saved-movies" ? (
             <button
               className='card__button'
-              onClick={() => obj.remove_saved(obj.movieId)}
+              onClick={() => obj.removeSaved(obj.movieId)}
             >
               <img src={cardUnLike} alt='лайк' className='card__like' />
             </button>

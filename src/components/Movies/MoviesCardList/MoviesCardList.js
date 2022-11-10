@@ -10,8 +10,8 @@ const MoviesCardList = ({
   loading,
   items,
   err,
-  add_saved,
-  remove_saved,
+  addSaved,
+  removeSaved,
   savedData,
   setSavedData,
   step,
@@ -30,6 +30,8 @@ const MoviesCardList = ({
   };
 
   useEffect(() => {
+    let savedSearchInput = document.querySelector(".searchForm__input");
+
     if (pathname === "/movies" && items.length > checkQtyItem()) {
       return setVisible(true);
     }
@@ -39,8 +41,9 @@ const MoviesCardList = ({
     }
 
     if (pathname === "/saved-movies") {
-      setSearchResult(false);
+      setSearchResult(savedSearchInput.value);
     }
+
     setVisible(false);
   }, [step, isSearchResult, items]);
 
@@ -59,12 +62,12 @@ const MoviesCardList = ({
         ) : items.length ? (
           items
             .slice(0, checkQtyItem())
-            .map((obj) => (
+            .map((film, index) => (
               <MoviesCard
-                key={pathname === "/movies" ? obj.id : obj.movieId}
-                {...obj}
-                add_saved={add_saved}
-                remove_saved={remove_saved}
+                key={pathname === "/movies" ? film.id : index}
+                {...film}
+                addSaved={addSaved}
+                removeSaved={removeSaved}
                 savedData={savedData}
                 setSavedData={setSavedData}
               />
