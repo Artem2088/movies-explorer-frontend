@@ -2,21 +2,11 @@ import { React, useState, useEffect } from "react";
 import "./Modal.css";
 import { AiOutlineClose } from "react-icons/ai";
 
-const Modal = ({ title, span, modal }) => {
-  const [open, setOpen] = useState(false);
-
-  useEffect(() => {
-    if (modal) {
-      setOpen(true);
-    } else {
-      setOpen(false);
-    }
-  }, [modal]);
-
+const Modal = ({ title, span, modal, setModal }) => {
   return (
-    <div className={`${open ? "modal " : "modal-hidden "}`}>
-      <div className='modal__overlay' onClick={() => setOpen(false)}>
-        <button onClick={() => setOpen(false)} className='button modal__close'>
+    <div className={`${modal ? "modal " : "modal-hidden "}`}>
+      <div className='modal__overlay' onClick={() => setModal(false)}>
+        <button onClick={() => setModal(false)} className='button modal__close'>
           <AiOutlineClose size={44} />
         </button>
       </div>

@@ -12,4 +12,4 @@ export const MESSAGE_ERR = {
   approvedProfileErr: " При обновлении профиля произошла ошибка.",
   spanErr: "Что-то пошло не так...",
 };
-export const LIMIT = 7;
+export const LIMIT_MOVIES = 7;

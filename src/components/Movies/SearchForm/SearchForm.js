@@ -1,15 +1,18 @@
-import { React, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import "./SearchForm.css";
 import search from "../../../images/icon/icon-search.svg";
 import searchInput from "../../../images/icon/icon-search-input.svg";
 import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
-import Modal from "../../Modal/Modal";
 import { MESSAGE_ERR } from "../../../utils/Constant";
 
-const SearchForm = ({ searchAction, short, short_status }) => {
-  const [modal, setModal] = useState(false);
-  const [title, setTitle] = useState("");
+const SearchForm = ({
+  searchAction,
+  short,
+  short_status,
+  setModal,
+  setModalTitle,
+}) => {
   const [searchText, setSearchText] = useState("");
   const { pathname } = useLocation();
 
@@ -26,9 +29,9 @@ const SearchForm = ({ searchAction, short, short_status }) => {
   };
 
   const handleSubmit = (e) => {
-    if (searchText == null) {
+    if (!searchText) {
       e.preventDefault();
-      setTitle(MESSAGE_ERR.validInput);
+      setModalTitle(MESSAGE_ERR.validInput);
       return setModal(true);
     } else {
       e.preventDefault();
@@ -42,7 +45,6 @@ const SearchForm = ({ searchAction, short, short_status }) => {
 
   return (
     <form className='searchForm' onSubmit={handleSubmit}>
-      <Modal modal={modal} title={title} />
       <div className='searchForm__field'>
         <img src={searchInput} alt='поиск' className='searchForm__inputIcon' />
         <input

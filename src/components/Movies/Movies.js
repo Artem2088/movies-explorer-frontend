@@ -13,7 +13,13 @@ import { MESSAGE_ERR } from "../../utils/Constant";
 let moviesData = [];
 let savedMoviesData = [];
 
-const Movies = ({ modal, isLoggedIn, user: currentUser }) => {
+const Movies = ({
+  modal,
+  isLoggedIn,
+  user: currentUser,
+  setModal,
+  setModalTitle,
+}) => {
   const [Movies, setMovies] = useState(
     JSON.parse(localStorage.getItem("search_result")) || []
   );
@@ -80,6 +86,7 @@ const Movies = ({ modal, isLoggedIn, user: currentUser }) => {
   const removeSaved = (movieId) => {
     deleteMovie(movieId, (data) => {
       if (data.status?.acknowledged) {
+        // let saved_movies = [...Movies];
         let saved_movies = [...savedMovies];
         saved_movies = saved_movies.filter((el) => el.movieId != movieId);
 
@@ -163,27 +170,27 @@ const Movies = ({ modal, isLoggedIn, user: currentUser }) => {
 
   const filterMovies = (film) => {
     if (pathname === "/movies") {
-      let result = moviesData.filter((el) =>
+      moviesData = moviesData.filter((el) =>
         el.nameRU.toLowerCase().includes(film.toLowerCase())
       );
 
       if (short) {
-        filterShort(result);
+        filterShort(moviesData);
       } else {
-        localStorage.setItem("search_result", JSON.stringify(result));
-        setMovies(result);
+        localStorage.setItem("search_result", JSON.stringify(moviesData));
+        setMovies(moviesData);
       }
     }
 
     if (pathname === "/saved-movies") {
-      let result = savedMoviesData.filter((el) =>
+      savedMoviesData = savedMoviesData.filter((el) =>
         el.nameRU.toLowerCase().includes(film.toLowerCase())
       );
 
       if (savedShort) {
-        filterShort(result);
+        filterShort(savedMoviesData);
       } else {
-        setSavedMovies(result);
+        setSavedMovies(savedMoviesData);
       }
     }
   };
@@ -212,6 +219,8 @@ const Movies = ({ modal, isLoggedIn, user: currentUser }) => {
         <MoviesHeader logedIn={isLoggedIn} />
         <SearchForm
           modal={modal}
+          setModal={setModal}
+          setModalTitle={setModalTitle}
           searchAction={
             pathname === "/movies" ? searchMovies : getSaveMoviesAll
           }

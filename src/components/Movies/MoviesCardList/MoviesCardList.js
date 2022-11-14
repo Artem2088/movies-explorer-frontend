@@ -4,7 +4,7 @@ import MoviesCard from "../MoviesCard/MoviesCard";
 import Preloader from "../Preloader/Preloader";
 import { MESSAGE_ERR } from "../../../utils/Constant";
 import "./MoviesCardList.css";
-import { LIMIT } from "../../../utils/Constant";
+import { LIMIT_MOVIES } from "../../../utils/Constant";
 
 const MoviesCardList = ({
   loading,
@@ -26,7 +26,7 @@ const MoviesCardList = ({
       return items.length;
     }
 
-    return step * LIMIT;
+    return step * LIMIT_MOVIES;
   };
 
   useEffect(() => {

@@ -5,21 +5,28 @@ import "./Profile.css";
 import { MESSAGE_ERR } from "../../utils/Constant";
 import useValidation from "../../hooks/useValidation";
 
-const Profile = ({ handleLogout, updateProfile }) => {
+const Profile = ({ handleLogout, updateProfile, setModal, setModalTitle }) => {
   const [visible, setVisible] = useState(false);
   const currentUser = useContext(CurrentUserContext);
   const [changeUser, setChangeUser] = useState(false);
   const [errorBtn, setErrorBtn] = useState(false);
   const { handleChange, nameValues, errors, handleSubmit, setNameValues } =
-    useValidation(updateProfile);
+    useValidation(updateProfile, setModal, setModalTitle);
 
   useEffect(() => {
     setNameValues(currentUser);
   }, [currentUser]);
 
   useEffect(() => {
-    handleUser();
-  }, [nameValues]);
+    if (
+      currentUser.name === nameValues.name &&
+      currentUser.email === nameValues.email
+    ) {
+      setChangeUser(false);
+    } else {
+      setChangeUser(true);
+    }
+  }, [nameValues, currentUser]);
 
   const handleErrorBtm = () => {
     if (!changeUser) {
@@ -28,13 +35,8 @@ const Profile = ({ handleLogout, updateProfile }) => {
   };
 
   const handleUser = () => {
-    if (
-      currentUser.name === nameValues.name &&
-      currentUser.email === nameValues.email
-    ) {
-      return setChangeUser(false);
-    }
-    setChangeUser(true);
+    setModalTitle(MESSAGE_ERR.approvedProfileErr);
+    setModal(true);
   };
 
   const onClickHandleUser = () => {
@@ -59,7 +61,7 @@ const Profile = ({ handleLogout, updateProfile }) => {
               name='name'
               autoComplete='off'
               onChange={handleChange}
-              value={nameValues.name || ""}
+              value={nameValues?.name || ""}
               required
               minLength='2'
               maxLength='40'
@@ -72,7 +74,7 @@ const Profile = ({ handleLogout, updateProfile }) => {
             <input
               className='input profile__input-email'
               onChange={handleChange}
-              value={nameValues.email || ""}
+              value={nameValues?.email || ""}
               id='email'
               name='email'
               autoComplete='off'

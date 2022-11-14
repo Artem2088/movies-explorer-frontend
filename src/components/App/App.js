@@ -85,6 +85,7 @@ function App() {
         }
       })
       .catch((err) => {
+        handleLogout();
         setTitle(MESSAGE_ERR.validAuthErr);
         setSpan(err);
         setLoggedIn(false);
@@ -178,6 +179,8 @@ function App() {
                   component={Movies}
                   user={currentUser}
                   modal={modal}
+                  setModal={setModal}
+                  setModalTitle={setTitle}
                 />
               }
             />
@@ -188,6 +191,9 @@ function App() {
                   isLoggedIn={isLoggedIn}
                   component={Movies}
                   user={currentUser}
+                  modal={modal}
+                  setModal={setModal}
+                  setModalTitle={setTitle}
                 />
               }
             />
@@ -198,6 +204,8 @@ function App() {
                   component={Profile}
                   isLoggedIn={isLoggedIn}
                   modal={modal}
+                  setModal={setModal}
+                  setModalTitle={setTitle}
                   handleLogout={handleLogout}
                   updateProfile={updateProfile}
                 />
@@ -213,7 +221,7 @@ function App() {
               }
             />
           </Routes>
-          <Modal span={span} title={title} modal={modal} />
+          <Modal span={span} setModal={setModal} title={title} modal={modal} />
         </div>
       </div>
     </CurrentUserContext.Provider>

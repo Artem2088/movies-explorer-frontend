@@ -1,6 +1,7 @@
 import { useState, useCallback, useEffect } from "react";
+import { MESSAGE_ERR } from "../utils/Constant";
 
-const useValidation = (callback) => {
+const useValidation = (callback, setModal, setModalTitle) => {
   const [nameValues, setNameValues] = useState({});
   const [errors, setErrors] = useState({});
   const [isValid, setIsValid] = useState(false);
@@ -15,8 +16,13 @@ const useValidation = (callback) => {
     setErrors({ ...errors, [name]: target.validationMessage });
     setValidity(target.closest("form").checkValidity());
 
-    if (name === "email") {
-      let validateEmail = value.split("@");
+    if (name === "email" || nameValues.email) {
+      let validateEmail;
+      if (name === "email") {
+        validateEmail = value.split("@");
+      } else {
+        validateEmail = nameValues.email.split("@");
+      }
 
       if (validateEmail.length === 2) {
         let preparedEmail = validateEmail[1].toString().split(".");
@@ -51,6 +57,9 @@ const useValidation = (callback) => {
       } else {
         callback(nameValues.name, nameValues.email);
       }
+    } else {
+      setModalTitle(MESSAGE_ERR.approvedProfileErr);
+      setModal(true);
     }
   };
 
