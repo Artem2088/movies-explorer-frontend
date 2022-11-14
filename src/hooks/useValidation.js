@@ -13,6 +13,7 @@ const useValidation = (callback) => {
 
     setNameValues({ ...nameValues, [name]: value });
     setErrors({ ...errors, [name]: target.validationMessage });
+    setValidity(target.closest("form").checkValidity());
 
     if (name === "email") {
       let validateEmail = value.split("@");
@@ -22,29 +23,34 @@ const useValidation = (callback) => {
 
         if (preparedEmail.length === 2) {
           setValidateEmail(
-            preparedEmail[0] === "mail" ||
-              ("yandex" && preparedEmail[1] === "ru") ||
+            (preparedEmail[0] === "mail" && preparedEmail[1] === "ru") ||
+              (preparedEmail[0] === "yandex" && preparedEmail[1] === "ru") ||
               (preparedEmail[0] === "gmail" && preparedEmail[1] === "com")
           );
+        } else {
+          setValidateEmail(false);
         }
+      } else {
+        setValidateEmail(false);
       }
     }
-
-    setValidity(target.closest("form").checkValidity());
   };
 
   useEffect(() => {
     setIsValid(checkValidity && checkValidateEmail);
-  }, [checkValidateEmail, checkValidity]);
+  }, [checkValidateEmail, checkValidity, isValid]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (nameValues.name && nameValues.email && nameValues.password) {
-      callback(nameValues.name, nameValues.email, nameValues.password);
-    } else if (nameValues.email && nameValues.password) {
-      callback(nameValues.email, nameValues.password);
-    } else {
-      callback(nameValues.name, nameValues.email);
+
+    if (isValid) {
+      if (nameValues.name && nameValues.email && nameValues.password) {
+        callback(nameValues.name, nameValues.email, nameValues.password);
+      } else if (nameValues.email && nameValues.password) {
+        callback(nameValues.email, nameValues.password);
+      } else {
+        callback(nameValues.name, nameValues.email);
+      }
     }
   };
 

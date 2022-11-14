@@ -85,7 +85,6 @@ function App() {
         }
       })
       .catch((err) => {
-        handleLogout();
         setTitle(MESSAGE_ERR.validAuthErr);
         setSpan(err);
         setLoggedIn(false);
@@ -109,8 +108,8 @@ function App() {
   //-------------------------------------Profile-----------------------------------------
   const updateProfile = (name, email) => {
     MainApi.patchUserMe(name, email)
-      .then(() => {
-        setCurrentUser({ name, email });
+      .then((data) => {
+        setCurrentUser(data);
         setModal(true);
         setTitle(MESSAGE_ERR.approvedProfile);
       })
@@ -128,7 +127,7 @@ function App() {
   const handleLogout = () => {
     localStorage.clear();
     setLoggedIn(false);
-    navigate("/");
+    navigate(location.pathname);
   };
   //  ---------------------------------------------------------------------------------------
   return (

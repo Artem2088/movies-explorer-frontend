@@ -10,14 +10,8 @@ const Profile = ({ handleLogout, updateProfile }) => {
   const currentUser = useContext(CurrentUserContext);
   const [changeUser, setChangeUser] = useState(false);
   const [errorBtn, setErrorBtn] = useState(false);
-  const {
-    handleChange,
-    isValid,
-    nameValues,
-    errors,
-    handleSubmit,
-    setNameValues,
-  } = useValidation(updateProfile);
+  const { handleChange, nameValues, errors, handleSubmit, setNameValues } =
+    useValidation(updateProfile);
 
   useEffect(() => {
     setNameValues(currentUser);
@@ -34,7 +28,10 @@ const Profile = ({ handleLogout, updateProfile }) => {
   };
 
   const handleUser = () => {
-    if (currentUser === nameValues) {
+    if (
+      currentUser.name === nameValues.name &&
+      currentUser.email === nameValues.email
+    ) {
       return setChangeUser(false);
     }
     setChangeUser(true);
@@ -62,7 +59,7 @@ const Profile = ({ handleLogout, updateProfile }) => {
               name='name'
               autoComplete='off'
               onChange={handleChange}
-              value={nameValues?.name || ""}
+              value={nameValues.name || ""}
               required
               minLength='2'
               maxLength='40'
@@ -75,7 +72,7 @@ const Profile = ({ handleLogout, updateProfile }) => {
             <input
               className='input profile__input-email'
               onChange={handleChange}
-              value={nameValues?.email || ""}
+              value={nameValues.email || ""}
               id='email'
               name='email'
               autoComplete='off'
@@ -118,7 +115,6 @@ const Profile = ({ handleLogout, updateProfile }) => {
           <button
             className='button profile__button'
             onClick={changeUser ? handleSubmit : handleUser}
-            disabled={!isValid}
             type='submit'
           >
             <span className='profile__button-span'>Сохранить</span>
