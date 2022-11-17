@@ -1,0 +1,56 @@
+.cardList {
+  max-width: 1140px;
+  background: rgba(255, 255, 255, 1);
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  padding: 70px 0 80px;
+  position: relative;
+}
+
+.cardList__container {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  gap: 40px;
+}
+
+.cardList__block {
+  max-width: 1140px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-top: 50px;
+  margin: 0 auto;
+}
+
+.cardList__plus {
+  max-width: 320px;
+  background: rgba(249, 249, 249, 1);
+  width: 89vw;
+  border: none;
+  margin: 0;
+  padding: 11px 0 8px;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+.cardList__plus:hover {
+  background: rgba(204, 204, 204, 1);
+  transition: all 0.5s linear;
+}
+
+@media screen and (max-width: 800px) {
+  .cardList {
+    padding: 60px 0 80px;
+  }
+
+}
+
+@media screen and (max-width: 320px) {
+  .cardList {
+    padding: 40px 0 80px;
+  }
+}

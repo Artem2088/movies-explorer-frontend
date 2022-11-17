@@ -1,0 +1,133 @@
+.aboutMe {
+  max-width: 1280px;
+  padding: 110px 70px 101px;
+  background: rgba(255, 255, 255, 1);
+}
+
+.aboutMe__header {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 22px;
+  line-height: 27px;
+  letter-spacing: -0.04em;
+  color: #000000;
+}
+
+.aboutMe__block {
+  position: relative;
+}
+
+.aboutMe__name {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 50px;
+  line-height: 58px;
+  letter-spacing: -0.04em;
+  color: rgba(0, 0, 0, 1);
+  margin: 0;
+  padding-top: 66px;
+}
+
+.aboutMe__hobby {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 20px;
+  color: #111111;
+  mix-blend-mode: normal;
+  margin: 0;
+  padding-top: 18px;
+}
+
+.aboutMe__description {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+  color: #000000;
+  mix-blend-mode: normal;
+  margin: 0;
+  padding: 26px 305px 99px 0;
+  max-width: 600px;
+}
+
+.aboutMe__link {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  color: #000000;
+  text-decoration: none;
+  margin: 0;
+  list-style-type: none;
+  cursor: pointer;
+  padding-right: 20px;
+}
+
+.aboutMe__foto {
+  background-image: url('../../../images/image/IMG_2879.JPG');
+  border-radius: 10px;
+  width: 270px;
+  height: 327px;
+  background-repeat: round;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  top: 68px;
+  right: 0px;
+}
+
+@media screen and (min-width: 671px) and (max-width: 800px) {
+  .aboutMe {
+    padding: 90px 50px;
+  }
+
+  .aboutMe__description {
+    padding: 20px 305px 87px 0;
+  }
+
+}
+
+@media screen and (min-width: 320px) and (max-width:670px) {
+
+  .aboutMe {
+    padding: 70px 14px;
+  }
+
+  .aboutMe__description {
+    padding: 20px 0 40px;
+  }
+
+  .aboutMe__name {
+    padding-top: 452px;
+    font-size: 30px;
+    line-height: 36px;
+  }
+}
+
+@media screen and (min-width: 550px) and (max-width:670px) {
+  .aboutMe__foto {
+    width: 292px;
+    height: 352px;
+    right: 27vw;
+  }
+}
+
+@media screen and (min-width: 450px) and (max-width:549px) {
+  .aboutMe__foto {
+    right: 16vw;
+  }
+}
+
+
+@media screen and (min-width: 360px) and (max-width:449px) {
+  .aboutMe__foto {
+    right: 12vw;
+  }
+}
+
+@media screen and (min-width: 320px) and (max-width:359px) {
+  .aboutMe__foto {
+    right: 10px;
+  }
+}
